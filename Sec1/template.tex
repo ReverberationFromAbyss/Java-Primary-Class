@@ -1,0 +1,1214 @@
+%----------------------------------------------------------------------------------------
+%  PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[
+  11pt, % Set the default font size, options include: 8pt, 9pt, 10pt, 11pt, 12pt, 14pt, 17pt, 20pt
+  %t, % Uncomment to vertically align all slide content to the top of the slide, rather than the default centered
+  %aspectratio=169, % Uncomment to set the aspect ratio to a 16:9 ratio which matches the aspect ratio of 1080p and 4K screens and projectors
+  xcolor=dvipsnames
+]{beamer}
+
+\graphicspath{{Images/}{./}} % Specifies where to look for included images (trailing slash required)
+
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule for better rules in tables
+
+\usepackage{xeCJK}
+%\setCJKsansfont{黑体}
+\usepackage{multicol}
+\usepackage{wrapfig}
+
+\usepackage{ctex}
+\usepackage{soul}
+\usepackage{xcolor}
+\usepackage{color}
+
+\usepackage{courier}
+\usepackage{lmodern}
+\usepackage{tikz}
+\usetikzlibrary{shapes.callouts, shadows, calc}
+\usepackage{listings}
+
+\tikzset{note/.style={rectangle collout, rounded corners,fill=grap!20, drop shadow, font=\footnotesize}}
+
+\newcommand{\tikzmark}[1]{\tikz[overlay,remember picture] \node (#1) {};}    
+
+\newcounter{image}
+\setcounter{image}{1}
+
+\makeatletter
+\newenvironment{btHighlight}[1][]
+{\begingroup\tikzset{bt@Highlight@par/.style={#1}}\begin{lrbox}{\@tempboxa}}
+{\end{lrbox}\bt@HL@box[bt@Highlight@par]{\@tempboxa}\endgroup}
+
+\newcommand\btHL[1][]{%
+  \begin{btHighlight}[#1]\bgroup\aftergroup\bt@HL@endenv%
+}
+\def\bt@HL@endenv{%
+  \end{btHighlight}%   
+  \egroup
+}
+
+\newcommand{\bt@HL@box}[2][]{%
+  \tikz[#1]{%
+    \pgfpathrectangle{\pgfpoint{0pt}{0pt}}{\pgfpoint{\wd #2}{\ht #2}}%
+    \pgfusepath{use as bounding box}%
+    \node[anchor=base west,rounded corners, fill=green!30,outer sep=0pt,inner xsep=0.2em, inner ysep=0.1em,  #1](a\theimage){\usebox{#2}};
+  }%
+   %\tikzmark{a\theimage} <= can be used, but it leads to a spacing problem
+   % the best approach is to name the previous node with (a\theimage)
+ \stepcounter{image}
+}
+\makeatother
+
+\lstset{language=C++,
+        basicstyle=\footnotesize\ttfamily,
+        keywordstyle=\footnotesize\color{blue}\ttfamily,
+        moredelim=**[is][\btHL]{`}{`},
+}
+\lstset{language=Java,
+        basicstyle=\footnotesize\ttfamily,
+        keywordstyle=\footnotesize\color{blue}\ttfamily,
+        moredelim=**[is][\bthl]{`}{`},
+}
+
+\lstset{
+    basicstyle          =   \tt,          % 基本代码风格
+    keywordstyle        =   \bfseries,          % 关键字风格
+    commentstyle        =   \rmfamily\itshape,  % 注释的风格，斜体
+    stringstyle         =   \ttfamily,  % 字符串风格
+    flexiblecolumns,                % 别问为什么，加上这个
+    numbers             =   left,   % 行号的位置在左边
+    showspaces          =   false,  % 是否显示空格，显示了有点乱，所以不现实了
+    numberstyle         =   \zihao{-5}\ttfamily,    % 行号的样式，小五号，tt等宽字体
+    showstringspaces    =   false,
+    captionpos          =   t,      % 这段代码的名字所呈现的位置，t指的是top上面
+    frame               =   lrtb,   % 显示边框
+}
+
+\lstdefinestyle{Java}{
+    language        =   Java, 
+    basicstyle      =   \zihao{-6}\ttfamily,
+    numberstyle     =   \zihao{-6}\ttfamily,
+    keywordstyle    =   \color{blue},
+    keywordstyle    =   [2] \color{teal},
+    stringstyle     =   \color{magenta},
+    commentstyle    =   \color{red}\ttfamily,
+    breaklines      =   true,   % 自动换行，建议不要写太长的行
+    columns         =   fixed,  % 如果不加这一句，字间距就不固定，很丑，必须加
+    basewidth       =   0.1cm,
+}
+
+\usetheme{Madrid}
+\usefonttheme{default} % Typeset using the default sans serif font
+\usepackage{palatino} % Use the Palatino font for serif text
+\usepackage[default]{opensans} % Use the Open Sans font for sans serif text
+
+\useinnertheme{circles}
+
+%----------------------------------------------------------------------------------------
+%  PRESENTATION INFORMATION
+%----------------------------------------------------------------------------------------
+
+\title[Java Sec.1]{Java Programming Language Simple Guide \\ Java 基础课} % The short title in the optional parameter appears at the bottom of every slide, the full title in the main parameter is only on the title page
+
+\subtitle{Infoco Computer Club Programming Classes \\ } % Presentation subtitle, remove this command if a subtitle isn't required
+
+\author[SSH. \and MXQ. (TA)]{Ug. Sihang Sha \and Pg. Muxi Qiao} % Presenter name(s), the optional parameter can contain a shortened version to appear on the bottom of every slide, while the main parameter will appear on the title slide
+
+\institute[XJTLU InfoCo Club]{Xiann' Jiaotong Livepool University \\ \smallskip \textit{infoco@xjtlu.edu.cn}} % Your institution, the optional parameter can be used for the institution shorthand and will appear on the bottom of every slide after author names, while the required parameter is used on the title slide and can include your email address or additional information on separate lines
+
+\date[\today]{\today} % Presentation date or conference/meeting name, the optional parameter can contain a shortened version to appear on the bottom of every slide, while the required parameter value is output to the title slide
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+%----------------------------------------------------------------------------------------
+%  TITLE SLIDE
+%----------------------------------------------------------------------------------------
+
+\begin{frame}
+	\titlepage % Output the title slide, automatically created using the text entered in the PRESENTATION INFORMATION block above
+
+	%% contents
+	% 同学们大家好, 我们是本次课程的讲师, 这位是乔木奚, 一位本校的研究生, 同时也任职为计算机相关课程的TA 
+	% 而我是沙思航, 本科大二生, 也将担任本次的主讲
+	% 在后续的课程中, 我们将尽全力为大家带来最好的课程体验.
+	%
+	% <Time: 1mins>
+\end{frame}
+
+
+%----------------------------------------------------------------------------------------
+%  TABLE OF CONTENTS SLIDE
+%----------------------------------------------------------------------------------------
+
+% The table of contents outputs the sections and subsections that appear in your presentation, specified with the standard \section and \subsection commands. You may either display all sections and subsections on one slide with \tableofcontents, or display each section at a time on subsequent slides with \tableofcontents[pausesections]. The latter is useful if you want to step through each section and mention what you will discuss.
+
+\begin{frame}[allowframebreaks]
+	\frametitle{Presentation Overview} % Slide title, remove this command for no title
+
+	\tableofcontents % Output the table of contents (all sections on one slide)
+	%\tableofcontents[pausesections] % Output the table of contents (break sections up across separate slides)
+
+	%% Contents:
+	% 我们将在此为大家介绍, 本节课将要讲解什么
+\end{frame}
+
+%----------------------------------------------------------------------------------------
+%  PRESENTATION BODY SLIDES
+%----------------------------------------------------------------------------------------
+
+\section{Brief Introduction to The Subject (课程综述)}
+%------------------------------------------------
+\begin{frame}
+	\frametitle{Introduction}
+	%% contents
+	% 本社课主要讲解的是Java程序设计, 这既是为了方便大家理解计算机编程, 也是为了方便大家在大二之后, 
+	% 接触到计算机相关课程是会更加轻松.
+	% <Time: 30s~1mins>
+
+	We'd like to guide you to know what shall we deliver to you.\\
+	我们将带领大家了简单了解我们将要讲解什么.
+
+	\begin{itemize}
+		\item What is Programming
+		\item What is Java
+		\item And \dots why is java.
+	\end{itemize}
+
+
+\end{frame}
+
+
+\section{Brief Introduction to Java Programming (对Java编程的介绍)} % Sections are added in order to organize your presentation into discrete blocks, all sections and subsections are automatically output to the table of contents as an overview of the talk but NOT output in the presentation as separate slides
+
+%------------------------------------------------
+
+\subsection{What is Programming (什么是编程)}
+
+\begin{frame}
+	\frametitle{Programming implies what? 编程代表了什么}
+
+	%% Contents
+	% 说到编程, 不知道大家的第一反应如何?
+	% 是电影中, 如黑客帝国, 跳动的字符,
+	% 还是现在对程序员格子衫,短裤,秃头的刻板印象?
+	%
+	% 实际上, 编程, 是一种于电脑交流的方式, 就如同我们平时会委托别人给自己帮忙一样,
+	% 编程也是告诉电脑, 要它帮自己干一些事情的过程
+
+	% TODO:figures here, one `matrix', another `programmer'
+	%
+
+	\begin{columns}[c]
+		\begin{column}{0.5\textwidth}
+			\begin{figure}[hpt]
+				\includegraphics[width=0.95\textwidth]{Images/Matrix.jpg}
+				\caption{}\label{fig:1.1}
+			\end{figure}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			\begin{figure}[hpt]
+				\begin{center}
+					\includegraphics[width=0.95\textwidth]{Images/prger.jpg}
+				\end{center}
+				\caption{}\label{fig:1.2}
+			\end{figure}
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}[fragile]
+	\frametitle{What is programming languages? or \dots}
+
+	%% Contents
+	% 与人沟通, 可以通过言语和文字, 这些东西被称作语言, 而与就按及沟通也需要一门语言
+	% 这种用于和计算机沟通的语言, 就被称作计算机编程语言
+	% 而在本节课中, 我们将要讨论的编程语言就是Java
+	%
+	% <Time: 1mins>
+
+	% TODO: figure here, speak out
+
+	\begin{columns}[c]{2}
+		\begin{column}{0.45\textwidth}
+			\begin{figure}
+				\begin{center}
+					\includegraphics[width=0.95\textwidth]{Images/speak.jpg}
+				\end{center}
+				\caption{}\label{fig:}
+			\end{figure}
+		\end{column}
+		\begin{column}{0.55\textwidth}
+			How could we communite with computer?
+
+			We use languages to communite with people.
+
+			Languages used to communite with computer are called programming languages.
+			Java is one of them.
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+
+\subsection{What is java stand for.(Java是什么)}
+%------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{What is java stand for.}
+	%% Contents
+	% 
+	% Java是一个 "高级语言", 也就是说, Java相对于其他的 "低级语言" 更加接近人类的自然语言, 简而言之, 就是更好懂
+	% 不知到大家是否有对于其他的计算机编程语言有所了解呢? 比如说 python?
+	% 大家可以举一下手
+	% python就是一个与Java类似的, 与计算机交流的语言, 不过, 由于这两个语言的设计思路并不相同,
+	% 如果将Java语言带入到python中理解的话, 就会造成很大的问题,
+	% 就像我们在学习英语的时候不能以中文的方式理解,
+	% 不然就会写出Chinglish一样
+	% 而这些东西, 就像外国人无法理解中式英语一样, 无法被计算机所理解
+	%
+	% 而大家可以看这页ppt, 很明显, 作为高级语言的Java要比低级语言简单的多
+	%
+	% <Time: 1mins>
+
+	% TODO: figure here, assembly and Java code
+
+	\begin{columns}
+		\begin{column}{0.05\textwidth}
+		\end{column}
+		\begin{column}{0.4\textwidth}
+			\lstinputlisting[
+				style = Java,
+				caption = {\bf assembly},
+				label = {assembly}
+			]{src/sample.s}
+		\end{column}
+		\begin{column}{0.1\textwidth}
+		\end{column}
+		\begin{column}{0.4\textwidth}
+			\center
+			\lstinputlisting[
+				style = Java,
+				caption = {\bf Java},
+				label = {Java}
+			]{src/sample.java}
+		\end{column}
+		\begin{column}{0.05\textwidth}
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+\section{Programming Envorienment.}
+\begin{frame}[fragile]
+	\frametitle{Envorienment, and\dots how to configure it\dots}
+	%% Contents
+	% 
+	% 学习编程语言, 环境是非常重要的,
+	% 就如我们与人沟通需要一个媒介, 与计算机共同也需要一个环境
+	% 如同我们与人用邮件交流,
+	% 环境干的事情就是把我们用计算机语言写下的文件发给计算机
+	%
+	% 不过环境不是我们课程的重点,
+	% 我们在本社课中也不会过多介绍计算机技能相关的东西
+	% 所以大家直接使用我们预先打包好的环境就可以了
+	% 如ppt上展示的, 先将环境的压缩包下载下来,
+	% 再完整解压到一个不含有中文字符的文件夹中
+	% 点开 VSCode 就可以了
+	%
+	% <Time: 10mins>
+	%
+
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+
+
+			\begin{figure}
+				\begin{center}
+					\includegraphics[width=0.95\textwidth]{Images/j1.png}
+				\end{center}
+				\caption{}\label{fig:2.1}
+			\end{figure}
+			\bigskip %
+			\begin{figure}
+				\begin{center}
+					\includegraphics[width=0.95\textwidth]{Images/j2.png}
+				\end{center}
+				\caption{}\label{fig:2.2}
+			\end{figure}
+
+		\end{column}
+		\begin{column}{0.4\textwidth}
+			\begin{figure}
+				\begin{center}
+					\includegraphics[width=0.95\textwidth]{Images/j3.png}
+				\end{center}
+				\caption{}\label{fig:2.3}
+			\end{figure}
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+\section{Hello World.}
+\begin{frame}[fragile]
+	\frametitle{``Hello, World!''}
+
+	%% Contents
+	% 1974年, 有一位老人, 他写下一句话,
+	% 至今仍被作为编程第一课所传道
+	% 这句话就是 "Hello, World!"
+	% 下面是一个经典的Hello World实现,
+	% 大家请在打开的VSCode中新建文件, 照抄, 并尝试运行
+	%
+	% <Time: 10min>
+
+	\begin{columns}
+		\begin{column}{0.8\textwidth}
+
+			filename: Sample.java
+			\begin{lstlisting}[style=Java]
+      public class Sample {
+          public static void main(String[] args) {
+            System.out.println("Hello, world!");
+          }// ! end of main
+      }
+      \end{lstlisting}
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+\begin{frame}[fragile]
+	%% Contents
+	%
+	% 大家都完成了?
+	% 我们可以观察一下, 在这个文件中, 除了包含Hello World字样的行以外
+	% 还有public class和public static void main(String[] args)
+	% 以及与它们对应的两对大括号,
+	% 不过现在大家不用太对它们好奇, 因为这些都是Java程序必备的部分
+	% 就像 "八股文"
+
+	\begin{columns}
+		\begin{column}{0.8\textwidth}
+			filename: Sample.java
+
+			\lstset{
+				language=Java,
+				basicstyle=\small\tt,
+				keywordstyle=\footnotesize\color{blue}\tt,
+				moredelim=**[is][\btHL]{`}{`},
+			}
+
+			\begin{lstlisting}
+        `public class Sample` {
+            `public static void main(String[] args)` {
+              System.out.println("Hello, world!");
+            }
+          }
+      \end{lstlisting}
+
+			\bigskip %
+
+			\lstset{
+				language=Java,
+				basicstyle=\small\tt,
+				keywordstyle=\footnotesize\color{blue}\tt,
+				moredelim=**[is][\btHL]{`}{`},
+			}
+
+			\begin{lstlisting}
+        public class <Name> {
+          public static void main(String[] args) {
+            // do something ...
+          }
+        }
+      \end{lstlisting}
+
+			All you need to do is remember this and write them down every time you need to write a java program.
+
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Name of Program}
+	%% Contents
+	%
+	% 现在大家再看ppt, 这里有一个单词被高亮了, 现在, 对比一下文件名和这个单词
+	% 有没有发现什么?
+	% 这里需要强调一点, 上一个ppt中高亮的部分是所有Java程序中都需要的,
+	% 只要记住完全一致的写下就可, 而这里标记的部分, 则要保证和源码文件相同
+	%
+
+	\begin{columns}
+		\begin{column}{0.8\textwidth}
+
+			filename: Sample.java
+
+			\lstset{language=Java,
+				basicstyle=\footnotesize\ttfamily,
+				keywordstyle=\footnotesize\color{blue}\ttfamily,
+				moredelim=**[is][\btHL]{`}{`},
+			}
+
+			\begin{lstlisting}
+        public class `Sample` {
+          public static void main(String[] args) {
+            System.out.println("Hello, world!");
+          }
+        }
+      \end{lstlisting}
+
+			\bigskip %
+			Sample in this part refers to the name of the program,
+			and should same as file name.
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Semi colon.}
+	%% Contents
+	%
+	% 然后我们会发现, 在这个hello world程序中, 哪里和我们的输出一致呢?
+	% 来到这个ppt, 我们可以看见, 这个包含了输出字符的一行
+	% 这里的System.out.println就是我们实际上要执行的部分
+	%
+	% 大家仔细观察, 这行文本, 是不是以分号结尾的?
+	% 这样一个以分号结尾的文本, 在Java中, 就是一个 "语句"
+	% 而Java程序, 也就是用一个个这样的语句组织起来的,
+	% 这里和Python有很大的区别, 所以,
+	% 曾经学过python的同学, 请不要忘记行尾的分号哦
+	%
+	% 而这些语句, 从上面, 逐行执行到下面
+	% 最终达成我们想要做到的任务
+	%
+	% 我们在前面已经找到了输出的文本
+	% 但是, 仔细观察一下, 我们高亮的部分是否和实际输出的部分不太相同?
+	% 在输出文本的外围, 是不是还有一对引号包裹?
+	%
+	\begin{columns}
+		\begin{column}{0.8\textwidth}
+
+			filename: Sample.java
+
+			\lstset{language=Java,
+				basicstyle=\footnotesize\ttfamily,
+				keywordstyle=\footnotesize\color{blue}\ttfamily,
+				moredelim=**[is][\btHL]{`}{`},
+			}
+
+			\begin{lstlisting}
+        System.out.println(`"Hello, world!"`);
+      \end{lstlisting}
+
+			\bigskip %
+
+			\lstset{language=Java,
+				basicstyle=\footnotesize\ttfamily,
+				keywordstyle=\footnotesize\color{blue}\ttfamily,
+				moredelim=**[is][\btHL]{`}{`},
+			}
+
+			\begin{lstlisting}
+        System.out.print("Hello, ");
+        System.out.println("World!");
+      \end{lstlisting}
+
+			Program executes each line based on the Top-Down order.
+
+			This shall get same result.
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+
+\section{String.}
+
+\begin{frame}[fragile]
+	\frametitle{String.}
+	%% Contents
+	%
+	% System.out.println是我们输出文本的工具,
+	% 而输出的文本就以这种两边包裹着引号的形式被记录
+	% 这样的东西被称作, "字符串"
+	%
+	% 它就像我们写作文时, 人物说出的话, 需要用一对括号括住.
+	%
+	% 所有字符都可以被写在字符串中,
+	% 包括中文
+	% 所以, 大家可以尝试更改上述hello world程序里的字符串
+	% 来让它输出不同的东西呢
+
+	\begin{columns}
+		\begin{column}{0.8\textwidth}
+
+			\lstset{language=Java,
+				basicstyle=\footnotesize\ttfamily,
+				keywordstyle=\footnotesize\color{blue}\ttfamily,
+				moredelim=**[is][\btHL]{`}{`},
+			}
+
+			\begin{lstlisting}
+        "put what ever you want here";
+      \end{lstlisting}
+
+			\bigskip %
+
+			String is something like " balabal..." .
+			And it can contains almost anything.
+
+			But, remember, quotations are important.
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+
+\subsection{Escape Characters.}
+
+\begin{frame}[fragile]
+	\frametitle{Escape Characters.}
+	%% Contents
+	%
+	% 不过大家有没有想过一件事,
+	% 既然字符串是通过双引号来标记范围的
+	% 那么如果需要输出双引号该怎么办?
+	% 很简单, 用一个标记,
+	% 来标记某个引号不是用来界定字符串范围的就好了
+	% 那么这个标记是什么呢?
+	% 答案是反斜杠 '\'
+	%
+	% 不过这又带来了另一个问题,
+	% 反斜杠被用来确定某些字符是要用来输出的了,
+	% 该要怎么输出它本身呢?
+	% 实际上解决方法和上面一样,
+	% 用反斜杠自己标记自己是要用来转义其他字符的,
+	% 还是要被按原样输出的
+	%
+	% 大家可能注意到了, 我提到了两个字,
+	% "转义"
+	% 这是什么意思呢, 转换意义,
+	% 其实这说明, 这个字符不再行使它原有的功能, 而用于其他用途
+	% 这也可以看出, 可以转义的字符, 实际上并不止上述两种
+	% 实际上, 这些可以被变换含义的字符, 有成非常多,
+	% 统称为 "转义字符"
+	% PPT展示了最常用的几个
+
+	\begin{columns}
+		\begin{column}{0.8\textwidth}
+
+			\begin{table}
+				\begin{tabular}{l l l}
+					\toprule
+					Character  & Escape Form            & Output                             \\
+					\midrule
+					Enter      & $\backslash$ n         & ↵                                  \\
+					Table      & $\backslash$ t         & \fcolorbox{red}{yellow}{\indent  } \\
+					Quotation  & $\backslash$ "         & "                                  \\
+					Back Slash & $\backslash\backslash$ & $\backslash$                       \\
+					\bottomrule
+				\end{tabular}
+			\end{table}
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+\subsection{Concatenate Strings, and\dots even other things\dots}
+
+\begin{frame}[fragile]
+	\frametitle{Concatenate Strings.}
+	%% Contents
+	%
+	% 字符串也是可以被操作的,
+	% 通过+号, 就可以将字符串连接起来
+	%
+	% 哦, 仔细看一下ppt, 是不是还有什么东西被放在字符串的后面了?
+
+	\begin{columns}
+		\begin{column}{0.8\textwidth}
+
+			\lstset{language=Java,
+				basicstyle=\footnotesize\ttfamily,
+				keywordstyle=\footnotesize\color{blue}\ttfamily,
+				moredelim=**[is][\btHL]{`}{`},
+			}
+
+			\begin{lstlisting}
+        System.out.println("Hello, " + "World!");
+      \end{lstlisting}
+
+			Strings can be Concatenated by plus mark ("+").
+
+			\bigskip %
+
+			\lstset{language=Java,
+				basicstyle=\footnotesize\ttfamily,
+				keywordstyle=\footnotesize\color{blue}\ttfamily,
+				moredelim=**[is][\btHL]{`}{`},
+			}
+
+			\begin{lstlisting}
+        System.out.println("Hello, " + `12345`);
+      \end{lstlisting}
+
+			Also, a number(Integer) can be "appended" to a String.
+
+			Actually, the processes generate a new string,
+			But, it is not necessary.
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+
+\section{Integers.}
+
+\begin{frame}[fragile]
+	\frametitle{Integers.}
+	%% Contents
+	%
+	% 仔细观察ppt, 在上页ppt中, 被加在字符串之后的是一系列的数字
+	% 这些在java中被视为整数
+	%
+	% 整数的表示有很多形式,
+	% 可以是符合数学规范的, 以非零数字开头, 组成的字串,
+	% 也可以是以0开头, 组成的字串
+	% 甚至, 可以是0x开头, 由0-9,a-f组成的字串
+	%
+	% 这些直接写在程序中的数字, 包括之前看到的字符串, 乃至未来将学习的其他东西,
+	% 被称作字面量, 或者, 立即值
+	%
+
+	\begin{columns}
+		\begin{column}{0.8\textwidth}
+
+			\lstset{language=Java,
+				basicstyle=\footnotesize\ttfamily,
+				keywordstyle=\footnotesize\color{blue}\ttfamily,
+				moredelim=**[is][\btHL]{`}{`},
+			}
+
+			\begin{lstlisting}
+        12345
+        012345
+        0xffff
+      \end{lstlisting}
+
+			Numbers, typically, Integers, have three forms in Java.\\
+
+			First, all matches defination in math. This is a kind of number so called Decimal Number.\\
+			Second, Start with a prefix `0'. This is a kind of number so called Octal Number.\\
+			Last, Start with a prefix `0x'. This is a kind of number so called Hexadecimal Number.\\
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+\subsection{Operation on Integers.}
+\begin{frame}[fragile]
+	\frametitle{Operators.}
+	%% Contents
+	%
+	% 对于编程而言, 输出并不是重点, 求值才是,
+	% 所以在各个编程语言中都有对于数的操作
+	% 包含了我们数学里的四则运算, 加减乘除, 还有一个取模,
+	% 取模是什么? 没有听说过没有关系, 实际上, 就是取余数,
+	%
+	% 而这个取模实际上也是数学中的运算呢
+	%
+	% 大家可以看ppt, 在这页ppt上, 我们展示了对于整数的几个操作. 
+	% 这里要注意, 由于是对于整数进行的运算, 如果无法整除, 会将余数直接抛弃
+	%
+	% 同时, 既然存在对于数的操作, 就也会有运算符优先级,
+	% 在Java中, 四则运算的优先级是和正常的代数相同的
+	%
+	% 不过, 也可以通过括号来改变优先级的呢
+
+	\begin{columns}
+		\begin{column}{0.8\textwidth}
+
+			\begin{table}
+				\begin{tabular}{l l l}
+					\toprule
+					Operation & Symbol & Form        \\
+					\midrule
+					Add       & +      & a + b       \\
+					Sub       & -      & a - b       \\
+					Mut       & *      & a * b       \\
+					Div       & /      & a / b       \\
+					Mod       & \%     & a \% b      \\
+					Barckets  & ()     & (a + b) * c \\
+					\bottomrule
+				\end{tabular}
+			\end{table}
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+\section{Variables.}
+\begin{frame}[fragile,allowframebreaks]
+	\frametitle{Variables.}
+	%% Contents
+	%
+	% 仅仅只有数字, 对于编程是远远不够的,
+	% 所以, 就像数学公式里有用字母代表变量
+	% Java中也可以创建变量
+	% 而且, Java中的变量, 就像一个袋子
+	% 可以存储, 覆写一个值, 并在需要的时候将其取出
+	%
+	% 大家可以观察一下, ppt上的a,b,c,d,
+	% 这些都是变量,
+	% 而像这样的int a, 就代表a是一个整型的变量
+	% 当然, 变量的命名也不一定是单个字母
+	% 变量可以是由任意个英文字符, 下划线, 或数字组成的
+	% 不过有一点, 数字不可以出现在变量命名的开头, 这点需要特别注意
+	%
+	% 而在变量名, 如a之前出现的int, 就是一个类型的名字,
+	% 这个我们将在后面详细讲解
+	%
+	% 不过现在要注意的一件事是, 变量的命名不可以和类型, 包括"程序名"等相同
+
+	\begin{columns}
+		\begin{column}{0.8\textwidth}
+
+			Example\dots
+			\lstset{language=Java,
+				basicstyle=\footnotesize\ttfamily,
+				keywordstyle=\footnotesize\color{blue}\ttfamily,
+				moredelim=**[is][\btHL]{`}{`},
+			}
+
+			\begin{lstlisting}
+        int a = 1;
+        int b = 2;
+        int c = 9, d = 10;
+
+        System.out.println(a + b);
+        
+        a = c;
+        b = d;
+
+        System.out.println(a - b);
+      \end{lstlisting}
+
+			\begin{columns}
+				\begin{column}{0.4\textwidth}
+
+					Following are correct name:
+					\lstset{language=Java,
+						basicstyle=\footnotesize\ttfamily,
+						keywordstyle=\footnotesize\color{blue}\ttfamily,
+						moredelim=**[is][\btHL]{`}{`},
+					}
+
+					\begin{lstlisting}[style=Java]
+      abcde
+      a1
+      _a
+      a_
+      a_1
+      \end{lstlisting}
+				\end{column}
+
+				\begin{column}{0.4\textwidth}
+
+					While those are wrong:
+					\lstset{language=Java,
+						basicstyle=\footnotesize\ttfamily,
+						keywordstyle=\footnotesize\color{blue}\ttfamily,
+						moredelim=**[is][\btHL]{`}{`},
+					}
+
+					\begin{lstlisting}
+      #_
+      1a
+      int
+      for
+      \end{lstlisting}
+
+				\end{column}
+			\end{columns}
+
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+
+% TODO: Finish it
+\subsection{Variable can be set to a value.}
+\begin{frame}[fragile,allowframebreaks]
+	\frametitle{How to let variables be true variable.}
+	%% Contents
+	%
+	% 我们之前讲到, 变量就是一个容器, 可以向里面放入东西, 也可以从中取出东西
+	% 那么要怎么办呢?
+	% 我们的做法是通过赋值符
+	% 在Java中, 赋值符是等号
+	% 所以, 这里就可以注意到一点了, 等号在Java中的作用和数学上的不一样.
+	% 在这里它代表, 将等号右边的值放到左边.
+	%
+	% 同时, 赋值可以和前面讲过的四则运算组合, 被称作"复合赋值"
+	%
+	% 而为了方便, 实际上, 也有自增自减操作符,
+	% 它们的作用是将自己的值增加1, 或者减少1
+
+	\begin{columns}
+		\begin{column}{0.8\textwidth}
+
+			\begin{table}
+				\begin{tabular}{l l l}
+					\toprule
+					Operation & Symbol & Form          \\
+					\midrule
+					Add       & +=     & a + b         \\
+					Sub       & -=     & a - b         \\
+					Mut       & *=     & a * b         \\
+					Div       & /=     & a / b         \\
+					Mod       & \%=    & a \% b        \\
+					Add-Self  & ++     & a++ or ++ a   \\
+					Sub-Self  & - -    & a- - or - - a \\
+					\bottomrule
+				\end{tabular}
+			\end{table}
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+\begin{frame}[fragile,allowframebreaks]
+	%% Contents
+	%
+
+	\begin{columns}
+		\begin{column}{0.8\textwidth}
+
+			\lstset{language=Java,
+				basicstyle=\footnotesize\ttfamily,
+				keywordstyle=\footnotesize\color{blue}\ttfamily,
+				moredelim=**[is][\btHL]{`}{`},
+			}
+
+			\begin{lstlisting}
+      int x = 1;
+      System.out.println(x);
+      x = 2;
+      System.out.println(x);
+      x *= -1;
+      System.out.println(x);
+      x++;
+      System.out.println(x);
+      \end{lstlisting}
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+\section{Comments.}
+
+\begin{frame}[fragile]
+	\frametitle{Comments.}
+	%% Contents
+	% 
+	% 大家还记得之前的hello world吗?
+	% 除了我们讲过的字符串
+	% 是不是还有个怪怪的东西?
+	%
+	% 这个怪怪的东西叫做 "注释"
+	% 注释有两种, 一种是只能被人类读懂的,
+	% 它就像学习英语时给单词含义的中文标记,
+	% 只有中国的英语学习者可以看得懂
+	% 另一种则是可以被计算机看懂,
+	% 更像是一种约定俗成的标记,
+	% 前者就是注释
+	% 而后者被称作文档
+
+	\begin{columns}
+		\begin{column}{0.8\textwidth}
+
+			filename: Sample.java
+
+			\lstset{language=Java,
+				basicstyle=\footnotesize\ttfamily,
+				keywordstyle=\footnotesize\color{blue}\ttfamily,
+				moredelim=**[is][\btHL]{`}{`},
+			}
+
+			\begin{lstlisting}
+public class `Sample` {
+  public static void main(String[] args) {
+    System.out.println("Hello, world!");
+  } // ! end of main
+}
+\end{lstlisting}
+
+			There are twe types of comments.\\
+
+			One is written for human beings, just like Chinese notes when you learn English.\\
+
+			The other is written for both human and computer. It is just like a kind of mark.
+
+
+		\end{column}
+
+	\end{columns}
+
+
+\end{frame}
+
+\subsection{Comments that will not be seen by computer.}
+
+\begin{frame}[fragile,allowframebreaks]
+	\frametitle{Comments that will not be seen by computer.}
+	%% Contents
+	%
+	% 注释也有两种, 一种是单行注释, 在它之后的一切都会被视为注释的一部分
+	% 而另一种是多行注释, 只有在它內部的才会被视为注释
+
+	\begin{columns}
+		\begin{column}{0.8\textwidth}
+
+			\lstset{language=Java,
+				basicstyle=\footnotesize\ttfamily,
+				keywordstyle=\footnotesize\color{blue}\ttfamily,
+				moredelim=**[is][\btHL]{`}{`},
+			}
+
+			\begin{lstlisting}
+      // Single Line Comment
+
+      /*
+      multiple Line Comment
+      */
+      \end{lstlisting}
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+\subsection{Comments can be seen by computer as well.}
+\begin{frame}[fragile,allowframebreaks]
+	\frametitle{Comments can be seen by computer as well.}
+	\framesubtitle{Documentation}
+	%% Contents
+	%
+	% 文档注释是一种特殊的多行注释, 有特殊的规则, 也有特殊的标记, 以上是一个例子
+
+	\begin{columns}
+		\begin{column}{0.8\textwidth}
+
+			\lstset{language=Java,
+				basicstyle=\footnotesize\ttfamily,
+				keywordstyle=\footnotesize\color{blue}\ttfamily,
+				moredelim=**[is][\btHL]{`}{`},
+			}
+
+			\begin{lstlisting}
+      /** Documentation Comment
+      * @override
+      */
+      \end{lstlisting}
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+\section{Debug. \& Executation Orders.}
+
+\subsection{Debug is a kind of behavour\dots}
+
+\begin{frame}[fragile,allowframebreaks]
+	\frametitle{Debug is a kind of behavour\dots}
+	%% Contents
+	%
+	% 调试是学习程序设计过程中一个重要的工具
+	% 通过调试, 我们可以了解程序运行的过程,
+	% 也可以在程序出现问题时, 通过各种调试手段, 定位并解决问题
+	% 实际上, 调试, 指的是我们分析程序运行过程的一种过程,
+	% 只不过会比较经常的被用在程序出错时
+	%
+	% 所以不要太过于局限其用法
+
+	\begin{columns}
+		\begin{column}{0.8\textwidth}
+
+			\begin{figure}
+				\begin{center}
+					\includegraphics[width=0.95\textwidth]{Images/d1.png}
+				\end{center}
+				\caption{Set Breakpoints}\label{fig:9.1}
+			\end{figure}
+
+			\begin{figure}
+				\begin{center}
+					\includegraphics[width=0.95\textwidth]{Images/d2.png}
+				\end{center}
+				\caption{Launch Debug}\label{fig:9.2}
+			\end{figure}
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+\begin{frame}[fragile,allowframebreaks]
+
+	\begin{columns}
+		\begin{column}{0.8\textwidth}
+
+			\begin{figure}
+				\begin{center}
+					\includegraphics[width=0.95\textwidth]{images/d3.png}
+				\end{center}
+				\caption{After Launch, You'd like to see}\label{fig:9.3}
+			\end{figure}
+
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}[fragile,allowframebreaks]
+
+	\begin{columns}
+		\begin{column}{0.8\textwidth}
+
+			\begin{figure}
+				\begin{center}
+					\includegraphics[width=0.95\textwidth]{images/d4.png}
+				\end{center}
+				\caption{Next Line, Which inplies that program runs on Top-Down order}\label{fig:9.4}
+			\end{figure}
+
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}[fragile,allowframebreaks]
+
+	\begin{columns}
+		\begin{column}{0.8\textwidth}
+			\begin{figure}
+				\begin{center}
+					\includegraphics[width=0.95\textwidth]{images/d5.png}
+				\end{center}
+				\caption{Finish Debug}\label{fig:9.5}
+			\end{figure}
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+\subsection{A Program runs from up to down\dots}
+\begin{frame}[fragile,allowframebreaks]
+	\frametitle{Run orders of a program\dots}
+	%% Contents
+	%
+
+	\begin{columns}
+		\begin{column}{0.8\textwidth}
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{Referencing}
+
+\begin{frame}
+	\frametitle{Citing References}
+
+	\bigskip % Vertical whitespace
+
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame} % Use [allowframebreaks] to allow automatic splitting across slides if the content is too long
+	\frametitle{References}
+
+	\begin{thebibliography}{99} % Beamer does not support BibTeX so references must be inserted manually as below, you may need to use multiple columns and/or reduce the font size further if you have many references
+		\footnotesize % Reduce the font size in the bibliography
+
+		%\bibitem[Kennedy, 2023]{p2}
+		%Annabelle Kennedy (2023)
+		%\newblock Publication title
+		%\newblock \emph{Journal Name} 12(3), 45 -- 678.
+	\end{thebibliography}
+\end{frame}
+
+%----------------------------------------------------------------------------------------
+%  ACKNOWLEDGMENTS SLIDE
+%----------------------------------------------------------------------------------------
+
+\begin{frame}
+	\frametitle{Acknowledgements}
+
+	\begin{columns}[t] % The "c" option specifies centered vertical alignment while the "t" option is used for top vertical alignment
+		\begin{column}{0.45\textwidth} % Left column width
+		\end{column}
+		\begin{column}{0.5\textwidth} % Right column width
+		\end{column}
+	\end{columns}
+\end{frame}
+
+%----------------------------------------------------------------------------------------
+%  CLOSING SLIDE
+%----------------------------------------------------------------------------------------
+
+\begin{frame}[plain] % The optional argument 'plain' hides the headline and footline
+	\begin{center}
+		{\Huge The End}
+
+		\bigskip\bigskip % Vertical whitespace
+
+		{\LARGE Questions? Comments?}
+	\end{center}
+\end{frame}
+
+%----------------------------------------------------------------------------------------
+
+\end{document}

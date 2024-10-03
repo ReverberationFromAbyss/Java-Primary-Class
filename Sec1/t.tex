@@ -1,0 +1,74 @@
+\documentclass{beamer}
+\usepackage{lmodern}
+\usepackage{tikz}
+\usetikzlibrary{shapes.callouts,shadows, calc}
+\usepackage{listings}
+
+\usetheme{CambridgeUS}
+
+\tikzset{note/.style={rectangle callout, rounded corners,fill=gray!20,drop shadow,font=\footnotesize}}    
+
+\newcommand{\tikzmark}[1]{\tikz[overlay,remember picture] \node (#1) {};}    
+
+\newcounter{image}
+\setcounter{image}{1}
+
+\makeatletter
+\newenvironment{btHighlight}[1][]
+{\begingroup\tikzset{bt@Highlight@par/.style={#1}}\begin{lrbox}{\@tempboxa}}
+{\end{lrbox}\bt@HL@box[bt@Highlight@par]{\@tempboxa}\endgroup}
+
+\newcommand\btHL[1][]{%
+  \begin{btHighlight}[#1]\bgroup\aftergroup\bt@HL@endenv%
+}
+\def\bt@HL@endenv{%
+  \end{btHighlight}%   
+  \egroup
+}
+\newcommand{\bt@HL@box}[2][]{%
+  \tikz[#1]{%
+    \pgfpathrectangle{\pgfpoint{0pt}{0pt}}{\pgfpoint{\wd #2}{\ht #2}}%
+    \pgfusepath{use as bounding box}%
+    \node[anchor=base west,rounded corners, fill=green!30,outer sep=0pt,inner xsep=0.2em, inner ysep=0.1em,  #1](a\theimage){\usebox{#2}};
+  }%
+   %\tikzmark{a\theimage} <= can be used, but it leads to a spacing problem
+   % the best approach is to name the previous node with (a\theimage)
+ \stepcounter{image}
+}
+\makeatother
+
+
+\lstset{language=C++,
+                basicstyle=\footnotesize\ttfamily,
+                keywordstyle=\footnotesize\color{blue}\ttfamily,
+                moredelim=**[is][\btHL]{`}{`},
+}
+
+\begin{document}
+\begin{frame}[fragile]{Better approach}
+	\begin{lstlisting}
+#include <future>
+std::map<std::string,std::string> french
+{{"hello","bonjour"},{"world","tout le monde"}};
+int main()
+{
+std::string greet=french["hello"];
+auto f=std::async(`[&]{std::cout << greet <<", ";}`);
+`std::string audience=french["word"];`
+f.get();
+std::cout<<audience<<std::endl;
+}
+\end{lstlisting}
+	% To insert the annotation
+	\begin{tikzpicture}[remember picture,overlay]
+		% first annotation
+		\coordinate (aa) at ($(a1)+(5,5)$); % <= adjust this parameter to move the position of the annotation 
+		\node[note,draw,callout relative pointer={($(aa)-(9,3.35)$)},right] at (aa) {time consuming I/O};
+
+		%second annotation
+		\coordinate (bb) at ($(a2)+(3.25,3.25)$); % <= adjust this parameter to move the position of the annotation 
+		\node[note,draw,callout relative pointer={($(bb)-(7,1.1)$)},right] at (bb) {next lookup};
+	\end{tikzpicture}
+
+\end{frame}
+\end{document}

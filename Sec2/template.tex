@@ -1,0 +1,582 @@
+%----------------------------------------------------------------------------------------
+%  PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[
+  11pt, % Set the default font size, options include: 8pt, 9pt, 10pt, 11pt, 12pt, 14pt, 17pt, 20pt
+  %t, % Uncomment to vertically align all slide content to the top of the slide, rather than the default centered
+  %aspectratio=169, % Uncomment to set the aspect ratio to a 16:9 ratio which matches the aspect ratio of 1080p and 4K screens and projectors
+  xcolor=dvipsnames
+]{beamer}
+
+\graphicspath{{Images/}{./}} % Specifies where to look for included images (trailing slash required)
+
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule for better rules in tables
+
+\usepackage{xeCJK}
+%\setCJKsansfont{黑体}
+\usepackage{multicol}
+\usepackage{wrapfig}
+
+\usepackage{ctex}
+\usepackage{soul}
+\usepackage{xcolor}
+\usepackage{color}
+
+\usepackage{courier}
+\usepackage{lmodern}
+\usepackage{tikz}
+\usetikzlibrary{shapes.callouts, shadows, calc}
+\usepackage{listings}
+
+\tikzset{note/.style={rectangle collout, rounded corners,fill=grap!20, drop shadow, font=\footnotesize}}
+
+\newcommand{\tikzmark}[1]{\tikz[overlay,remember picture] \node (#1) {};}    
+
+\newcounter{image}
+\setcounter{image}{1}
+
+\makeatletter
+\newenvironment{btHighlight}[1][]
+{\begingroup\tikzset{bt@Highlight@par/.style={#1}}\begin{lrbox}{\@tempboxa}}
+{\end{lrbox}\bt@HL@box[bt@Highlight@par]{\@tempboxa}\endgroup}
+
+\newcommand\btHL[1][]{%
+  \begin{btHighlight}[#1]\bgroup\aftergroup\bt@HL@endenv%
+}
+\def\bt@HL@endenv{%
+  \end{btHighlight}%   
+  \egroup
+}
+
+\newcommand{\bt@HL@box}[2][]{%
+  \tikz[#1]{%
+    \pgfpathrectangle{\pgfpoint{0pt}{0pt}}{\pgfpoint{\wd #2}{\ht #2}}%
+    \pgfusepath{use as bounding box}%
+    \node[anchor=base west,rounded corners, fill=green!30,outer sep=0pt,inner xsep=0.2em, inner ysep=0.1em,  #1](a\theimage){\usebox{#2}};
+  }%
+   %\tikzmark{a\theimage} <= can be used, but it leads to a spacing problem
+   % the best approach is to name the previous node with (a\theimage)
+ \stepcounter{image}
+}
+\makeatother
+
+\lstset{language=C++,
+        basicstyle=\footnotesize\ttfamily,
+        keywordstyle=\footnotesize\color{blue}\ttfamily,
+        moredelim=**[is][\btHL]{`}{`},
+}
+
+\lstset{
+    basicstyle          =   \tt,          % 基本代码风格
+    keywordstyle        =   \bfseries,          % 关键字风格
+    commentstyle        =   \rmfamily\itshape,  % 注释的风格，斜体
+    stringstyle         =   \ttfamily,  % 字符串风格
+    flexiblecolumns,                % 别问为什么，加上这个
+    numbers             =   left,   % 行号的位置在左边
+    showspaces          =   false,  % 是否显示空格，显示了有点乱，所以不现实了
+    numberstyle         =   \zihao{-5}\ttfamily,    % 行号的样式，小五号，tt等宽字体
+    showstringspaces    =   false,
+    captionpos          =   t,      % 这段代码的名字所呈现的位置，t指的是top上面
+    frame               =   lrtb,   % 显示边框
+}
+
+\lstset{language=Java,
+        basicstyle=\footnotesize\ttfamily,
+        keywordstyle=\footnotesize\color{blue}\ttfamily,
+        moredelim=**[is][\bthl]{`}{`},
+}
+\lstdefinestyle{Java}{
+    language        =   Java, 
+    basicstyle      =   \zihao{-6}\ttfamily,
+    numberstyle     =   \zihao{-6}\ttfamily,
+    keywordstyle    =   \color{blue},
+    keywordstyle    =   [2] \color{teal},
+    stringstyle     =   \color{magenta},
+    commentstyle    =   \color{red}\ttfamily,
+    breaklines      =   true,   % 自动换行，建议不要写太长的行
+    columns         =   fixed,  % 如果不加这一句，字间距就不固定，很丑，必须加
+    basewidth       =   0.1cm,
+		moredelim       =   **[is][\btHL]{`}{`},
+}
+
+\usetheme{Madrid}
+\usefonttheme{default} % Typeset using the default sans serif font
+\usepackage{palatino} % Use the Palatino font for serif text
+\usepackage[default]{opensans} % Use the Open Sans font for sans serif text
+
+\useinnertheme{circles}
+
+%----------------------------------------------------------------------------------------
+%  PRESENTATION INFORMATION
+%----------------------------------------------------------------------------------------
+
+\title[Java Sec.1]{Java Programming Language Simple Guide \\ Java 基础课} % The short title in the optional parameter appears at the bottom of every slide, the full title in the main parameter is only on the title page
+
+\subtitle{Infoco Computer Club Programming Classes \\ } % Presentation subtitle, remove this command if a subtitle isn't required
+
+\author[SSH. \and MXQ. (TA)]{Ug. Sihang Sha \and Pg. Muxi Qiao} % Presenter name(s), the optional parameter can contain a shortened version to appear on the bottom of every slide, while the main parameter will appear on the title slide
+
+\institute[XJTLU InfoCo Club]{Xiann' Jiaotong Livepool University \\ \smallskip \textit{infoco@xjtlu.edu.cn}} % Your institution, the optional parameter can be used for the institution shorthand and will appear on the bottom of every slide after author names, while the required parameter is used on the title slide and can include your email address or additional information on separate lines
+
+\date[\today]{\today} % Presentation date or conference/meeting name, the optional parameter can contain a shortened version to appear on the bottom of every slide, while the required parameter value is output to the title slide
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+%----------------------------------------------------------------------------------------
+%  TITLE SLIDE
+%----------------------------------------------------------------------------------------
+
+\begin{frame}
+	\titlepage % Output the title slide, automatically created using the text entered in the PRESENTATION INFORMATION block above
+
+\end{frame}
+
+
+%----------------------------------------------------------------------------------------
+%  TABLE OF CONTENTS SLIDE
+%----------------------------------------------------------------------------------------
+
+% The table of contents outputs the sections and subsections that appear in your presentation, specified with the standard \section and \subsection commands. You may either display all sections and subsections on one slide with \tableofcontents, or display each section at a time on subsequent slides with \tableofcontents[pausesections]. The latter is useful if you want to step through each section and mention what you will discuss.
+
+\begin{frame}[allowframebreaks]
+	\frametitle{Presentation Overview} % Slide title, remove this command for no title
+
+	\tableofcontents % Output the table of contents (all sections on one slide)
+	%\tableofcontents[pausesections] % Output the table of contents (break sections up across separate slides)
+
+\end{frame}
+
+%----------------------------------------------------------------------------------------
+%  PRESENTATION BODY SLIDES
+%----------------------------------------------------------------------------------------
+
+\section{Variables, And Type of Variables}
+%------------------------------------------------
+\begin{frame}[fragile]
+	\frametitle{Variables}
+
+	%% Contents:
+	%
+	% 变量是我们在Java编程中最常遇到的东西. 
+	%
+	% 大家想一下, 计算机之所以被称作计算机,
+	% 核心就在于计算两字, 而Java作为一门计算机编程语言,
+	% 则提供了数以百计的对数据进行操作, 运算的方法
+	%
+	% 这些东西当然可以对我们写在纸面上的量,
+	% 字面量(或立即值, in assembly), 进行计算, 比如 1+2
+	% 但是, 就像数学的函数一样,
+	% 如果只提供一个固定量, 是没有意义的
+	% 这时候, 就必须要有变量来代替固定值了
+	%
+	% 本次的主要内容是详细讲解于变量相关的内容
+
+	\begin{columns}[c]
+		\begin{column}{0.9\textwidth}
+
+			Variables are something we manipulate in Java often.\\
+
+			As we mentioned last class, variable can store values, do algebra operations and draw value stored inside them for use then.
+
+			\begin{columns}[c]
+				\begin{column}{0.4\textwidth}
+
+					literal (or immediate)
+
+					\begin{lstlisting}
+2147483647
+0x7fffffff
+017777777777
+1.0
+2e4
+\end{lstlisting}
+
+				\end{column}
+
+				\begin{column}{0.4\textwidth}
+
+					variable
+
+					\begin{lstlisting}
+int foo = 2147483647;
+int bar = -2147483648;
+double real = 1.0;
+double var = 3e1;
+\end{lstlisting}
+
+				\end{column}
+			\end{columns}
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+%------------------------------------------------
+\subsection{Data, and Variables which are assigned data}
+
+\begin{frame}[fragile]
+	\frametitle{Data, and Variables which are assigned data}
+
+	%% Contents:
+	% 变量是一个容器, 而它需要承装的则是 "数据"
+	% 如我们刚才展示的各种整数实数,
+	% 乃至于之前所介绍过的字符串
+	% 这样的一些存储了信息的量, 就都可以是我们口中的 "数据"
+	%
+	% 我们再次以之前的 "Hello, World!" 程序为例,
+	% 这个程序中, 哪些东西是数据呢?
+	% 答案是 那个 "Hello, World!" 的字符串,
+	% 它承载的就是这样你好世界的一个信息
+	%
+	% 不过大家请注意, 这个字符串, 实际上本身不是数据
+	% 而是我们在前面提到了的 "字面量",
+	% 那么这些我们可以直接在程序中写下的字面量,
+	% 又是什么东西呢?
+	% 它实际上是数据的一种表现形式, 叫值
+	% 而数据是一种抽象的概念, 需要一些其他的方式来代表, 操作
+	% 所以有了值这种东西, 来代表某些数据.
+	% 因此, 从这个方面来看, 单独的值本身没有意义
+	%
+	% 而在后面, 我们也将接触除了这些可以被直接写出的 "值" 以外的对数据的表示方法
+	% 
+	% 不过直接写出值并无法对其进行更进一步的操作,
+	% 因此也就有了变量
+	% 变量, 之前已经讲过, 是一种容器,
+	% 大家从直观上可以看出, 编程的变量和数学上的变量有着千丝万缕的联系
+	% 比如大家可以看一下PPt上的这个示例
+	%
+	% 这里分别是数学中的函数和Java中的函数
+	% 它们干的事情是相似的,
+	% 用一个参数调用它, 并且产出一个值
+	% 就像函数的定义, 对于集合X中的值, 在集合Y上的映射
+	% x是函数的自变量, 产出则是因变量
+	%
+	% 不过, 在程序设计中, 变量的作用更进一步, 它可以承载一个值,
+	% 也可以被重新赋值为其他的值,
+	% 它可以作为函数的自变量
+	% 也可以在函数求值的过程中被定义,
+	% 承载其他表达式(可以与数学中的表达式, 或函数同等理解)的结果
+	%
+
+	\begin{columns}[c]
+		\begin{column}{0.9\textwidth}
+
+			Data, is something we manipulate in programming and contains some information.\\
+
+			Value, is one represent for data.\\
+
+			Variables, are some containers that hold those data.
+			Or, officially, a variable is a named unit of data that is assigned a value.
+
+			\begin{columns}[c]
+				\begin{column}{0.5\textwidth}
+					\[
+						f(x) = x^2 + x - 8
+					\]
+				\end{column}
+				\begin{column}{0.5\textwidth}
+					\begin{lstlisting}[style=Java]
+int f(int x){
+  return x * x + x - 8;
+}
+          \end{lstlisting}
+
+					\begin{lstlisting}[style=Java]
+int d = f(8);
+// which is same as 
+int g = 8 * 8 + 8 - 8;
+// or, even
+int a = 8;
+int y = a * a + a - 8;
+          \end{lstlisting}
+				\end{column}
+			\end{columns}
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+\subsection{Variable, Definition of variables}
+\begin{frame}[fragile]
+	\frametitle{Definition for variables}
+
+	%% Contents:
+	% 
+	% 大家早在上节课, 其实就以接触到变量的定义了
+	% 不过, 在这次课中, 我们将详细讲解变量定义的方式,
+	% 以及其相关的含义.
+	%
+	% 不过呢, 当然不包括命名规范啦
+	% 毕竟在上一节课就已经讲的很清楚了
+	%
+	% 大家可以看到ppt上展示的第一个部分的东西
+	% 展示了变量定义的规则
+	% 不过可能同学们不太看得懂这些符号表示的意思,
+	% 所以大家可以看下面,
+	%
+	% 首先, 第一行, 我们干的事情是定义了一个变量foo,
+	% 这个变量的类型是int, 这里的int代表, 变量类型.
+	% 后续我门将会详细讲解变量类型和变量的关系
+	%
+	% 注意哦, 这里和我们之前写的都不一样
+	% 只是定义了变量, 而没有给它赋值
+	% 当我们需要使用这个变量的时候, 得到的值只会是它的默认值
+	% 因为变量类型是int, 而int的默认值为0,
+	% 所以, 如果后续不对它重新赋值, 直接使用的话, 我们会得到结果0
+	% 不同的变量类型会又不同的初值, 不过这些将会在后面详细说明
+	%
+	% 下面一行, 类似的方式, 我们定义了一个int类型的变量,
+	% bar, 但是与第一行不同的是, 我们在定义变量的同时,
+	% 给了它一个初始的值, 这里, 这个值是10
+	% 像这样对变量进行定义, 并赋初值的行为, 叫做变量的初始化.
+	% 在定义变量的时候初始化是一个很好的习惯
+	% 哪怕就是希望变量被初始化为0, 或者它们的默认值
+	%
+	% 变量也可以连续定义, 并且连续初始化
+	% 就像下面两行中, 对于double类型的变量的定义
+
+	\begin{columns}[c]
+		\begin{column}{0.9\textwidth}
+
+			\begin{lstlisting}
+<Type-Identifier> <Variable-Name> [= <Initial-Value>];
+// OR
+<Type-Identifier> <Variable-Name> [= <Initial-Value>],
+                  [<Variable-Name> [= <Initial-Value>]],
+                  ...;
+// <...> means compent and its meaning
+// [...] means following parts are optional
+      \end{lstlisting}
+
+			\begin{lstlisting}
+int foo;      // define a variable called foo
+int bar = 10; // define a variable, whose initial value is 10 and called bar
+// Above we define each variable in a single line
+double a,b;   // define two variable, one is a, and the other is b
+double read = 1.0, pi = 3.14;
+double alpha = 1.0, beta = 3.6, theta = 9.9;
+      \end{lstlisting}
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+\subsection{Variable Assignment --- Cover origin value, or ``set a value for variable''}
+\begin{frame}
+	\frametitle{Variable Assignment}
+
+	%% Contents
+	%
+	% 既然讲过了变量的定义, 我们也要重新讲一下变量的赋值
+	%
+	% 其实在上一节课中, 我们已经简单讲过变量赋值相关的东西了
+	% 不知到大家是否还有印象呢
+	%
+
+	\begin{columns}[c]
+		\begin{column}{0.9\textwidth}
+
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+% --------------------------------------------------------
+
+\subsection{String, More Specified}
+\begin{frame}[fragile]
+	\frametitle{Methods for manipulate string}
+
+	%% Contents:
+	% 
+	% 作为我们第一个程序里面就涉及到的数据,
+	% 字符串, 不仅被用于演示程序的执行, 在程序设计过程当中也相当有用
+	%
+	% 所以, 针对字符串, Java实际上提供了很多相关方法
+	% 比如上一节课中讲到的字符串拼接
+	%
+	% 对字符串的拼接有两种方式
+	% 一种是我们在上一节课就已经了解
+	% 了的+号, 大家可以看到ppt的第二行
+	%
+	% 但是, 在拼接字符串的时候, 我们还有另一种方式
+	% 就是concatnate方法
+	% 大家可以看到ppt上绿色高亮的部分
+	% 这样一个跟在对象后面, 以点开头的东西, 就是方法的调用
+	%
+	% 大家或许会注意到, 这里提到了 "对象", 和 "方法", 两个概念
+	% 这里是两个涉及到了Java深层设计的东西,
+	% 我们将在后面的课程中详细讲解
+	%
+	% 正如之前所说的, 如1234这样的直观上的数值是数据的一种表现形式,
+	% 对象则是数据的另一种表现形式, 它将与某些事物有关的东西全都放在一起,
+	% 形成一个被称作类的组织关系
+	%
+	% 大家现在只要暂时将这些或存入变量,
+	% 或直接写下的值(或数据)视为对象,
+	% 而这些像绿色高亮部分一样直接对对象进行的操作视作方法就可以了
+	%
+	% 大家再可以看一下, System.out.println, 中的println,
+	% 是不是也是这样的呢, 实际上println也是一个 "方法"
+	%
+	% 好的, 现在回归主题
+	% 大家可以将ppt上的示例实际运行一下试试
+	%
+	% 我们预期看到的应该是
+	% "This is Java, Java is best."
+	% "This is Rust, Rust is better."
+	% "This is C, they all my kids."
+	% (Write it onto the white board)
+	%
+	% 大家其实从这里就可以看出来,
+	% 字符串的拼接实际上不会对原来的字符串有任何更改
+	% 而是创建了一个新的字符串
+	%
+	% 所以, 如果想要修改一个字符串变量的内容, 应该要怎么做?
+	% 用赋值符号将其覆盖掉
+
+	\begin{columns}[c]
+		\begin{column}{0.8\textwidth}
+
+			\begin{lstlisting}[style=Java]
+String str = "String";
+str + "foo"; // will produce "Stringfoo"
+str`.concat("bar")`; // will produce "Stringbar"
+"String".concat("bar"); // will produce "Stringbar"
+      \end{lstlisting}
+
+
+			\begin{lstlisting}[style=Java]
+pubic class StringConcate{
+  public static void main(String [] args){
+    String str = "This is ";
+    System.out.println(str.concat("Java, Java is best."));
+    System.out.println(str + "Rust, Rust is better.");
+    // + will do same as .concat
+    System.out.println("This is ".concat("C, they all my kids."));
+    System.out.println(str);
+  }// ! main
+}
+      \end{lstlisting}
+
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+
+	%% Contents:
+	% 
+	% 对于一个字符串, 实际上还可以有一些其他的操作
+	% 比如, 我们可以通过charAt方法获得字符串中某一个字符
+	\begin{columns}
+		\begin{column}{0.9\textwidth}
+
+		\end{column}
+	\end{columns}
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%------------------------------------------------
+
+\section{Referencing}
+
+\begin{frame}
+	\frametitle{Citing References}
+
+	\bigskip % Vertical whitespace
+
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame} % Use [allowframebreaks] to allow automatic splitting across slides if the content is too long
+	\frametitle{References}
+
+	\begin{thebibliography}{99} % Beamer does not support BibTeX so references must be inserted manually as below, you may need to use multiple columns and/or reduce the font size further if you have many references
+		\footnotesize % Reduce the font size in the bibliography
+
+		%\bibitem[Kennedy, 2023]{p2}
+		%Annabelle Kennedy (2023)
+		%\newblock Publication title
+		%\newblock \emph{Journal Name} 12(3), 45 -- 678.
+	\end{thebibliography}
+\end{frame}
+
+%----------------------------------------------------------------------------------------
+%  ACKNOWLEDGMENTS SLIDE
+%----------------------------------------------------------------------------------------
+
+\begin{frame}
+	\frametitle{Acknowledgements}
+
+	\begin{columns}[t] % The "c" option specifies centered vertical alignment while the "t" option is used for top vertical alignment
+		\begin{column}{0.45\textwidth} % Left column width
+		\end{column}
+		\begin{column}{0.5\textwidth} % Right column width
+		\end{column}
+	\end{columns}
+\end{frame}
+
+%----------------------------------------------------------------------------------------
+%  CLOSING SLIDE
+%----------------------------------------------------------------------------------------
+
+\begin{frame}[plain] % The optional argument 'plain' hides the headline and footline
+	\begin{center}
+		{\Huge The End}
+
+		\bigskip\bigskip % Vertical whitespace
+
+		{\LARGE Questions? Comments?}
+	\end{center}
+\end{frame}
+
+%----------------------------------------------------------------------------------------
+
+\end{document}
