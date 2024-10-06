@@ -29,6 +29,8 @@
 \usetikzlibrary{shapes.callouts, shadows, calc}
 \usepackage{listings}
 
+\usepackage{fontspec-xetex}
+
 \tikzset{note/.style={rectangle collout, rounded corners,fill=grap!20, drop shadow, font=\footnotesize}}
 
 \newcommand{\tikzmark}[1]{\tikz[overlay,remember picture] \node (#1) {};}    
@@ -61,17 +63,25 @@
 }
 \makeatother
 
-\lstset{language=C++,
-        basicstyle=\footnotesize\ttfamily,
-        keywordstyle=\footnotesize\color{blue}\ttfamily,
-        moredelim=**[is][\btHL]{`}{`},
-}
+%\setmainfont{FiraCode Nerd Font Mono}
+%\setsansfont{FiraCode Nerd Font Mono}
+%\setmonofont{FiraCode Nerd Font Mono}
+
+%\setCJKmainfont[BoldFont = STLibian-SC-Regular,]{TpldKhangXiDictTrial}
+%\setCJKsansfont{DFWaWaSC-W5}
+%\setCJKmonofont{STXingkai-SC-Light}
+%\setCJKfamilyfont{qingsong}{FZQKBYSJW--GB1-0}
+%\lstset{language=Java,
+%        basicstyle=\footnotesize\ttfamily,
+%        keywordstyle=\footnotesize\color{blue}\ttfamily,
+%        moredelim=**[is][\bthl]{`}{`},
+%}
 
 \lstset{
-    basicstyle          =   \tt,          % 基本代码风格
+    basicstyle          =   \ttfamily,          % 基本代码风格
     keywordstyle        =   \bfseries,          % 关键字风格
-    commentstyle        =   \rmfamily\itshape,  % 注释的风格，斜体
-    stringstyle         =   \ttfamily,  % 字符串风格
+    commentstyle        =   \tt\itshape,  % 注释的风格，斜体
+    stringstyle         =   \tt\itshape,  % 字符串风格
     flexiblecolumns,                % 别问为什么，加上这个
     numbers             =   left,   % 行号的位置在左边
     showspaces          =   false,  % 是否显示空格，显示了有点乱，所以不现实了
@@ -81,23 +91,22 @@
     frame               =   lrtb,   % 显示边框
 }
 
-\lstset{language=Java,
-        basicstyle=\footnotesize\ttfamily,
-        keywordstyle=\footnotesize\color{blue}\ttfamily,
-        moredelim=**[is][\bthl]{`}{`},
-}
 \lstdefinestyle{Java}{
-    language        =   Java, 
-    basicstyle      =   \zihao{-6}\ttfamily,
-    numberstyle     =   \zihao{-6}\ttfamily,
-    keywordstyle    =   \color{blue},
-    keywordstyle    =   [2] \color{teal},
-    stringstyle     =   \color{magenta},
+    language        =   Java,
     commentstyle    =   \color{red}\ttfamily,
+    basicstyle      =   \zihao{-5}\ttfamily,
+    keywordstyle    =   \color{blue}\bfseries,
+    keywordstyle    =   [2] \color{teal},
+    stringstyle     =   \color{magenta}\tt,
+    numberstyle     =   \zihao{-6}\ttfamily,
+    showstringspaces    =   false,
+    flexiblecolumns,                % 别问为什么，加上这个
     breaklines      =   true,   % 自动换行，建议不要写太长的行
     columns         =   fixed,  % 如果不加这一句，字间距就不固定，很丑，必须加
-    basewidth       =   0.1cm,
+    basewidth       =   0.15cm,
 		moredelim       =   **[is][\btHL]{`}{`},
+    captionpos          =   t,      % 这段代码的名字所呈现的位置，t指的是top上面
+    frame               =   lrtb,   % 显示边框
 }
 
 \usetheme{Madrid}
@@ -483,9 +492,20 @@ double alpha = 1.0, beta = 3.6, theta = 9.9;
 	% 这里是两个涉及到了Java深层设计的东西,
 	% 我们将在后面的课程中详细讲解
 	%
-	% 正如之前所说的, 如1234这样的直观上的数值是数据的一种表现形式,
-	% 对象则是数据的另一种表现形式, 它将与某些事物有关的东西全都放在一起,
-	% 形成一个被称作类的组织关系
+	% 正如之前所说的,
+	% 如1234这样的直观上的数值是数据的一种表现形式,
+	% 对象则是数据的另一种表现形式,
+	% 它将与某些事物有关的东西全都放在一起,
+	% 形成一个被称作 "类" 的组织关系
+	% 类可以被认为是对于一些事物共有属性的概括
+	% 比如说, 我们可以用"猫" 来统称所有的缅因猫, 暹罗猫等各个品种的猫
+	% 用 "狗" 来统称所有的会汪汪叫, 有鼻子有眼四足行走的生物
+	% 但是, 由于类其实是将我们之前提到的这些整数或者其他的数据,
+	% 我们称之为 "基本数据" 用一些方式组织起来,
+	% 所以, 几乎所有的用于基本数据的操作,
+	% 都没有办法直接应用于类的 "实例" 上面
+	% 不过, 具体这个类是什么, 有哪些用处,
+	% 以及, 常用类的用法, 我们将在后续的课程中慢慢揭示...
 	%
 	% 大家现在只要暂时将这些或存入变量,
 	% 或直接写下的值(或数据)视为对象,
@@ -566,7 +586,8 @@ pubic class StringConcate{
 	% 那么如果我们希望忽略大小写呢?
 	% 那就需要使用compareToIgnoreCase和equalsIgnoreCase两个方法了
 	%
-	% 当然, 
+	% 当然, 对于空字符串, 其实也有一个判断, 叫做empty
+	% 这就避免了写equals("")这样的东西, 也便于理解想要做的事情
 	%
 	% 当然, 对于字符串的操作, 一定也少不了查找给定内容
 	% 这时就需要使用indexOf方法了
@@ -593,11 +614,65 @@ System.out.println(foo.indexOf("World"));
 \begin{frame}[fragile]
 	\frametitle{Integer}
 
+	%% Contents:
+	%
+	% 除了字符串, 计算机既然被称作计算机, 也不可避免会需要与数字打交道,
+	% 而整型数就是我们在编程中最长碰见的数字
+	%
+	% 在上一节课中, 我们已经了解到对于整数的一些基本操作,
+	% 比如加减乘除等四则运算
+	%
+	% 而现在, 我们将更详细的介绍一下我们会遇见的这些整数
+	%
+	% 我们在上节课中, 见到了int类型
+	% 但是, 实际上, 在前面的ppt中, 我们也可以看到
+	% 整数一共有4的类型, 分别是byte, short, int, long,
+	% 这些不同的类型, 主要差异在存储的值的多少
+	% byte最小, 只能存储2^8个数, 也就是说, 从-128到+127的数
+	% 其次是short, 2^16,
+	% 然后就是我们最常用的int, 2^32, ~2147483648~2147483647
+	% 最后是long, 2^64
+	%
+	% 不过这些东西太过于基础, 只能进行简单的+,-,*,/,%运算
+	% 所以, 为了方便, Java将给它们做了一个包装, 使得它们可以像String 
+	% 一样用多种方法被操作
+	% 这些包装分别为, Byte, Short, Integer, Long,
+	%
+	% 不过大家要注意, 这些包装, 其实都是类,
+	% 类是没有办法通过我们之前见过的各种运算符来操作和比较的
+	% 而是需要用一些方法来代行
+	% 不过, 对于这些基本类型的包装很简单
+	% 实际上它们本身也可以被拆包得到原来的基本类型
+	% 所以大家在面对这些东西的时候, 直接转会基本类型再运算就可以啦
+	%
+	% 而后面我们会详细讲到这些包装类需要如何操作的
 
 	% TODO: With integer operators, like +,-,*,/,%
 	\begin{columns}[c]
 		\begin{column}{0.9\textwidth}
 
+			\begin{table}
+				\begin{tabular}{l l l}
+					\toprule
+					Type  & Wrapper & Range                                                   \\
+					\midrule
+					byte  & Byte    & $ -2^{7} ~ 2^{7} - 1 $ (-128 \dots 127)                 \\
+					short & Short   & $ -2^{15} ~ 2^{15} - 1 $ (-32768 \dots 32767)           \\
+					int   & Integer & $ -2^{31} ~ 2^{31} - 1 $ (-2147483648 \dots 2147483647) \\
+					long  & Long    & $ -2^{63} ~ 2^{63} - 1 $ (-9,223,372,036,854,775,808    \\
+					      &         & \dots 9,223,372,036,854,775,807)                        \\
+					\bottomrule
+				\end{tabular}
+			\end{table}
+
+			\begin{lstlisting}[style=Java]
+int foo = 10;
+Integer bar = 10;
+String barInString = bar.toString();
+System.out.println(bar.equals(foo));
+// we should use equals to compare Integers and other wrapper
+System.out.println(bar.compareTo(30));
+  \end{lstlisting}
 
 		\end{column}
 	\end{columns}
@@ -608,11 +683,48 @@ System.out.println(foo.indexOf("World"));
 \begin{frame}[fragile]
 	\frametitle{Real numbers}
 
+	%% Contents:
+	%
+	% 除了整数, 计算机也可以处理实数
+	%
+	% 在Java中, 实数一共有两种类型, 分别为float和double
+	% 我们称之为, 浮点数和双精度浮点数
+	% 浮点数的表示范围远大于整数, 但是浮点数会存在精度问题, float只能处理6~7位有效数字,
+	% double则会相对而言多
+	%
+	% 比如说, 对于float类型, 它最多一共可以精确表示16,777,216个数, 但是它却可以表示1e20这么大的数字
+	%
+	% 大家可以用如下所示的代码来查看它们的最大最小值
+	% 其实, 整数的各个范围也是可以用类似方法来查看最大最小值的哦
+	% 具体就是, 包装类 加上 .MIN_VALUE或.MAX_VALUE
+	%
+	% 与整数类似, 实数也可以进行各种四则运算
+	% +,-,*,/
+	% 并且, 和整数除法不同的是, 这里的除法并不会放弃余数, 而是会得到小数结果的哦
+	% 但是请记住, 取模运算是只可以被用于整数的
+	%
+	% 当然, 实数也有包装类, 提供了一些方便的用于操作浮点数的方法
+	% 还是如代码所示, 分别为Float和Double
 
 	% TODO: +,-,*,/
 	\begin{columns}[c]
 		\begin{column}{0.9\textwidth}
 
+			\begin{lstlisting}[style=Java]
+// float
+System.out.println("基本类型：float 二进制位数：" + Float.SIZE);
+System.out.println("包装类：java.lang.Float");
+System.out.println("最小值：Float.MIN_VALUE=" + Float.MIN_VALUE);
+System.out.println("最大值：Float.MAX_VALUE=" + Float.MAX_VALUE);
+System.out.println();
+
+// double
+System.out.println("基本类型：double 二进制位数：" + Double.SIZE);
+System.out.println("包装类：java.lang.Double");
+System.out.println("最小值：Double.MIN_VALUE=" + Double.MIN_VALUE);
+System.out.println("最大值：Double.MAX_VALUE=" + Double.MAX_VALUE);
+System.out.println(); 
+      \end{lstlisting}
 
 		\end{column}
 	\end{columns}
@@ -623,9 +735,88 @@ System.out.println(foo.indexOf("World"));
 \begin{frame}[fragile]
 	\frametitle{Extremely large numbers}
 
+	%% Contents:
+	%
+	% 虽然看上去long和double可以表示的范围已经足够大了
+	% 至少适用于我们日常生活中各种数据的表示了
+	%
+	% 但是, 在一些特殊的场景之下, 它们还是不够大
+	%
+	% 这个时候, 就需要所谓的 "大数" 了,
+	% Java中常用的大数有两种
+	% 第一个是BigInteger, 而另一个是BigDecimal
+	% 分别用于表示特大的整数和特大的小数
+	% 这两个类型的使用和其他的整数或实数类型及其相似
+	% 都是四则运算和一些高级功能
+
 	\begin{columns}[c]
 		\begin{column}{0.9\textwidth}
 
+			\begin{lstlisting}[style=Java]
+        BigInteger foo = new BigInteger(1);
+        BigDecimal bar = new BigDecimal(0.1);
+        // Large numbers created through int or float type
+        // may cause some unexpedted conditions
+        System.out.println("Value of foo is: " + foo);
+        System.out.println("Value of bar is: " + bar);
+        // We use String to construct them instead
+        foo = new BigInteger("9223372036854775809");
+        bar = new BigDecimal("0.1");
+        System.out.println("Value of bar is: " + bar);
+      \end{lstlisting}
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+\begin{frame}[fragile]
+
+	%% Contents:
+	%
+	% 如何创建一个数倒是已经了解了,
+	% 但是要如何对它们进行操作呢?
+	% 同学们可能会直观想要直接用类似整数类型和实数类型相似的
+	% +,-,*,/,或者, 整数类型特有的%, 来对其操作
+	% 但是, 实际上这是不可行的
+	% 因为这些大数, 实际上也是类,
+	% 并且由于其脱离了基本类型, 如int, double,
+	% 也就无法用基本类型的操作方式来操作
+	% 所以
+	% 我们需要用这些类的方法来操作它们
+	%
+	% 大家可以看到, 这里是一些比较常用的方法
+	% add是将一个数与另一个相加
+	% compareTo则是相减
+	% mutiply相乘
+	% devide相除
+	% pow乘方
+	% 其实还要sqrt开方
+	%
+	% 当然, 和其他的基本数据的包装类一样,
+	% 其实也可以用equals来比较两数是否相等
+	%
+	% 最后, 在代码中, 我们再次输出了foo的值,
+	% 大家其实可以看到
+	% foo的值是没有改变的
+	% 也就是说, 这些大数和字符串一样, 是 "不变的"
+	% 要想修改变量的内容,
+	% 就要用结果把原来的东西给覆盖掉
+	% UwU~
+
+	\begin{columns}[c]
+		\begin{column}{0.9\textwidth}
+
+			\begin{lstlisting}[style=Java]
+BigInteger foo = BigInteger("24");
+System.out.println(foo.add(BitInteger.ONE));
+System.out.println(foo.compareTo(BigInteger.TWO));
+System.out.println(foo.mutiply(BigInteger.TWO));
+System.out.println(foo.devide(BigInteger.TWO));
+System.out.println(foo.mod(BigInteger("9")));
+System.out.println(foo.pow(BigInteger.TWO));
+System.out.println(foo);
+      \end{lstlisting}
 
 		\end{column}
 	\end{columns}
@@ -636,12 +827,195 @@ System.out.println(foo.indexOf("World"));
 \begin{frame}[fragile]
 	\frametitle{Logical representation, Boolean}
 
+	%% Contents:
+	%
+	% 说了这么久数值计算
+	% 也该讲一讲什么是对错了
+	% 其实我们生活中很常需要与对错打交道
+	% 当然, 写程序也是一样
+	% 而且, 计算机有一点好,
+	% 就是它总是非黑即白的, 不像我们的生活那样
+	% 总是需要考虑什么是不完全正确的, 而什么有需要考量
+	%
+	% 所以, 在计算机的生活中, 只有是与非
+	% true/false
+	% 当我们比较两个数字,
+	% 如果它们每一位数都相同, 那么它们就一定相等
+	% 那么, 一个对于它们是否相等的判断, 就是是
+	% 否则, 就只会有否
+	%
+	% 下面, 就让我们来看一下
+	% 计算机中的是与非
+	%
+	% 在上面的表格中, 我们以经见到了
+	% boolean
+	% 中文叫做布尔值, 逻辑值
+	% 它表示的是一个命题是否为真
+	% 比如说, 对于1等于1这个命题, 它得到的就该是true,
+	% 大家可以看一下ppt上第一行, 尝试自己运行一下试试看
+	% 
+	% 这里就要讲到我们的关系运算了
+	% 它们用于表示两个基本数值之间的关系
+	% 包括了等于判断
+	% 大于, 小于, 大于等于, 小于等于 和不等于判断
+	%
+	% 我们可以把这些判断当做各个命题
+	% 如果可以满足这样一个判断, 就是真
+	% 否则, 就是假
+	%
+	% 当然, 我们之前也提到了, 类无法用这些运算来处理
+	% 但是, 实际上我们也可以看到,
+	% 我们至今遇见的各个类也都提供了比较两个对象的方法
+	% 而且, 我们目前为止还是主要和基本数据打交道,
+	% 所有不用太担心相关的问题
 
-	% TODO: With relationship operator like <,>,>=,<=,!=, ...
+	% TODO: With relationship operator like ==,<,>,>=,<=,!=, ...
 	% With logical operator like ||,&&,!
 	\begin{columns}[c]
 		\begin{column}{0.9\textwidth}
 
+			\begin{table}
+				\begin{tabular}{l l}
+					\toprule
+					Relationship        & Operator \\
+					\midrule
+					Equals              & ==       \\
+					Greater than        & >        \\
+					Less than           & <        \\
+					Greater or equal to & >=       \\
+					Less to equal to    & <=       \\
+					Not Equal           & !=       \\
+					\bottomrule
+				\end{tabular}
+			\end{table}
+
+			\begin{lstlisting}[style=Java]
+System.out.println(1==1);
+      \end{lstlisting}
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+\begin{frame}[fragile]
+
+	%% Contents:
+	%
+	% 当然咯,
+	% 既然其他的基本类型都有可以写出来的类型和变量定义
+	% 我们的逻辑值怎么能没有呢
+	% 大家可以看到ppt,
+	% 这上面分别是它的基本类型定义和包装类定义
+	%
+	% 大家再想一想, 其他基本类型都有自己的运算规则
+	% 逻辑类型是不是也要有自己的运算规则?
+	%
+	% 当然的,
+	% 我们有所谓的逻辑运算来操作逻辑值
+	% 比如说, 大家再看ppt
+	% 这里就用到了 "与" 运算,
+	% 来表示 1 < var < 80这样一个概念
+
+	\begin{columns}[c]
+		\begin{column}{0.9\textwidth}
+
+			\begin{lstlisting}[style=Java]
+boolean foo = true;
+Boolean bar = new Boolean(foo);
+      \end{lstlisting}
+
+			\begin{lstlisting}[style=Java]
+int var = 20;
+System.out.print(1 < var && 80 > var);
+      \end{lstlisting}
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+\begin{frame}[fragile]
+
+	%% Contents:
+	%
+	% 大家可以看到下表
+	% 这里列出了这些运算符以及它们的运算规则
+	% 简单来说, 就是
+	% 与运算需要两边都满足, 才得到真
+	% 或运算只需要一个满足, 就得到真
+	% 否运算, 使得原表达式结果相反
+
+	\begin{columns}[c]
+		\begin{column}{0.9\textwidth}
+
+			\begin{table}
+				\begin{tabular}{l l l l l l}
+					\toprule
+					Logic & Operator & Form     & A     & B     & Result \\
+					\midrule
+					And   & \&\&     & A \&\& B & true  & true  & true   \\
+					      &          &          & true  & false & false  \\
+					      &          &          & false & true  & false  \\
+					      &          &          & false & false & false  \\
+					Or    & ||       & A || B   & true  & true  & true   \\                \\
+					      &          &          & true  & false & true   \\
+					      &          &          & false & true  & true   \\
+					      &          &          & false & false & false  \\
+					Not   & !        & ! A      & true  &       & false  \\                                            \\
+					      &          &          & false &       & true   \\
+					\bottomrule
+				\end{tabular}
+			\end{table}
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+\begin{frame}[fragile]
+
+	%% Contents:
+	%
+	% 有一点大家要注意, 就是, 逻辑运算是 "短路" 的
+	% 这是什么意思呢?
+	% 就是只要通过前一步操作可以确定整体的值的时候,
+	% 就不会再执行后一步了
+	% 比如, 当我咋执行一个与运算时,
+	% 如果前面以及确定为否了,
+	% 那么它就会立即将表达式的整体视为否,
+	% 而不执行后一步
+	% 相应的, 在执行或运算时,
+	% 只要前面确定为真,
+	% 则后面就不会再被执行了
+	%
+	% 大家还记得++运算符是用来做什么的吗?
+	% ++运算符是用来让变量自身增加1的,
+	% 和各种类的方法不一样,
+	% 它的修改会直接反馈到变量本身
+	% 所以如果后半句被执行了
+	% 我们会期望a的值为6
+	% 但是事实上, 我们最终只会得到a的值为5
+	%
+	% 大家可以试一下这个例子
+	% 实际体验一下
+	%
+	% 不过呢, 我们并不推荐在各种复杂的语句中使用++这样的自增自减运算符
+	% 而是直接把它们单列
+	% 不过, 这里为了演示逻辑, 所以这样写了
+	% 如果对自增运算感兴趣, 可以在网上查询资料
+	% 或者在课后单独询问
+
+	\begin{columns}[c]
+		\begin{column}{0.9\textwidth}
+
+			\begin{lstlisting}[style=Java]
+public class Logical {
+  public static void main(String[] args){
+    int a = 5;
+    boolean b = (a<4) && (a++<10);
+    System.out.println("Whole resule is " + b);
+    System.out.println("while a is ... :" + a);
+  } // ! main
+}
+      \end{lstlisting}
 
 		\end{column}
 	\end{columns}
@@ -694,6 +1068,9 @@ System.out.println(foo.indexOf("World"));
 
 	% Cast from one to another
 
+	% TODO: Integer.parseInt
+	% String.toString
+	% ...
 	\begin{columns}[c]
 		\begin{column}{0.9\textwidth}
 
