@@ -8,4 +8,7 @@
 *.snm
 *.pyg
 *.out
+*.class
+*.o
+*.obj
 Images

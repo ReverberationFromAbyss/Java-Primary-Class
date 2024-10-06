@@ -111,7 +111,7 @@
 %  PRESENTATION INFORMATION
 %----------------------------------------------------------------------------------------
 
-\title[Java Sec.1]{Java Programming Language Simple Guide \\ Java 基础课} % The short title in the optional parameter appears at the bottom of every slide, the full title in the main parameter is only on the title page
+\title[Java Sec.2]{Java Programming Language Simple Guide \\ Java 基础课} % The short title in the optional parameter appears at the bottom of every slide, the full title in the main parameter is only on the title page
 
 \subtitle{Infoco Computer Club Programming Classes \\ } % Presentation subtitle, remove this command if a subtitle isn't required
 
@@ -184,7 +184,7 @@
 			\begin{columns}[c]
 				\begin{column}{0.4\textwidth}
 
-					literal (or immediate)
+					literal (or immediate, in assembly)
 
 					\begin{lstlisting}
 2147483647
@@ -198,7 +198,7 @@
 
 				\begin{column}{0.4\textwidth}
 
-					variable
+					variable(Definition, in Java)
 
 					\begin{lstlisting}
 int foo = 2147483647;
@@ -222,6 +222,7 @@ double var = 3e1;
 	\frametitle{Data, and Variables which are assigned data}
 
 	%% Contents:
+	%
 	% 变量是一个容器, 而它需要承装的则是 "数据"
 	% 如我们刚才展示的各种整数实数,
 	% 乃至于之前所介绍过的字符串
@@ -325,10 +326,14 @@ int y = a * a + a - 8;
 	%
 	% 注意哦, 这里和我们之前写的都不一样
 	% 只是定义了变量, 而没有给它赋值
-	% 当我们需要使用这个变量的时候, 得到的值只会是它的默认值
+	% 当我们需要使用这个变量的时候,
+	% 如果直接使用而未给它赋值, 就会出现问题
+	% 只会得到它的默认值
 	% 因为变量类型是int, 而int的默认值为0,
-	% 所以, 如果后续不对它重新赋值, 直接使用的话, 我们会得到结果0
-	% 不同的变量类型会又不同的初值, 不过这些将会在后面详细说明
+	% 所以, 如果后续不对它重新赋值,
+	% 直接使用的话, 我们会得到结果0
+	% 不同的变量类型会又不同的初值,
+	% 不过这些将会在后面详细说明
 	%
 	% 下面一行, 类似的方式, 我们定义了一个int类型的变量,
 	% bar, 但是与第一行不同的是, 我们在定义变量的同时,
@@ -346,9 +351,10 @@ int y = a * a + a - 8;
 			\begin{lstlisting}
 <Type-Identifier> <Variable-Name> [= <Initial-Value>];
 // OR
-<Type-Identifier> <Variable-Name> [= <Initial-Value>],
-                  [<Variable-Name> [= <Initial-Value>]],
-                  ...;
+<Type-Identifier> <Variable-Name> [= <Initial-Value>]
+                [, <Variable-Name> [= <Initial-Value>]]
+                [,...]
+                ...;
 // <...> means compent and its meaning
 // [...] means following parts are optional
       \end{lstlisting}
@@ -367,34 +373,97 @@ double alpha = 1.0, beta = 3.6, theta = 9.9;
 
 \end{frame}
 
-\subsection{Variable Assignment --- Cover origin value, or ``set a value for variable''}
-\begin{frame}
-	\frametitle{Variable Assignment}
+% --------------------------------------------------------
 
-	%% Contents
+\subsection{Type of variables, and values}
+\begin{frame}[fragile]
+	\frametitle{Variable Type}
+	% TODO: And brief introduce to class, object and instance
+	% (类, 对象 和实例)
 	%
-	% 既然讲过了变量的定义, 我们也要重新讲一下变量的赋值
+	%% Contents:
+	% 大家或许会注意到,
+	% 我们在上一页的ppt中提到了int型, double型等字词
+	% 这些其实就是变量的类型,
 	%
-	% 其实在上一节课中, 我们已经简单讲过变量赋值相关的东西了
-	% 不知到大家是否还有印象呢
+	% 在现实生活中, 数据实际上是有类型的
+	% 比如说, 这里有50个同学, 这个数据一定是个整数对吧,
+	% 不会出现50.5个同学这种表述
+	% 不然, 咱们这就不是编程课, 是犯罪现场了
 	%
-
+	% 而当我们去银行取钱, 则又要考虑到精度在2位小数的实数了
+	% 因为除了$1 或 $20,这种, 也会有5cent或者更小的金额
+	% 这时候, 如果还用整数表示, 就势必会造成误差
+	% 这在涉及到交易的环境下是完全无法被接受的
+	%
+	% 同时, 数据不止需要有数字,
+	% 有时候也需要用字符表示,
+	% 比如我们的hello world, 这是没有办法用以实数, 乃至虚数来表达的
+	% 这些就又需要字符和字符串类型
+	%
+	% 在计算机中, 有关于数据的差异更大, 相对应的也有各种不同的限制
+	% 如 int只能表示从-2147483648~2147483647之间的数
+	% 而 Byte甚至只能表示-1024~1023之间的数
+	%
+	% 下表展示了我们将学习的Java中的一些基本数据类型
+	% 首先是老熟人String, 如果只说英文名不太习惯的话,
+	% 大家对字符串这个名称是否有印象呢
+	%
+	% 然后下面的四个是我们的整数类型,
+	% 包含了byte, short, int, long四种, 分别对应了四种不同的范围
+	% 再然后是实型数据, 或者叫做浮点型
+	% 包含float和double, 它们的特点之一是数据不一定精确, 但是却可以表示极大的实数
+	%
+	% 再往下, 是字符型数据, 这个东西实际上组成了字符串
+	% 不过我们几乎不会与它打太深的交道,
+	%
+	% 最后是逻辑值, 布尔型数据, 它只有一个成员, boolean
+	% 不好读是么
+	% 没关系, 记住就行了,
+	% 在程序设计中, 我们不会太常的与它打直接交道
+	% 但是我们却会在各种涉及到做与不做的判断的地方遇见它们
+	%
 	\begin{columns}[c]
 		\begin{column}{0.9\textwidth}
+
+			\begin{table}
+				\begin{tabular}{l l l}
+					\toprule
+					Type      & Defination   & default Form         \\
+					\midrule
+					String    & String foo;  & ""                   \\
+					          &              &                      \\
+					Byte      & byte foo;    & 0x0 / 0 / 00 / 0b0   \\
+					Short     & short foo;   & 0x0 / 0 / 00 / 0b0   \\
+					Integer   & int foo;     & 0x0 / 0 / 00 / 0b0   \\
+					Long      & long foo;    & 0x0l / 0l / 00/ 0b0l \\
+					          &              &                      \\
+					Double    & double foo;  & 0.0d                 \\
+					Float     & float foo;   & 0.0f                 \\
+					          &              &                      \\
+					Character & char foo;    & '$\backslash0$'      \\
+					          &              &                      \\
+					Boolean   & boolean foo; & false                \\
+
+					\bottomrule
+				\end{tabular}
+			\end{table}
 
 
 		\end{column}
 	\end{columns}
 
 \end{frame}
+
+
 % --------------------------------------------------------
 
-\subsection{String, More Specified}
+\subsubsection{String, More Specified}
 \begin{frame}[fragile]
 	\frametitle{Methods for manipulate string}
 
 	%% Contents:
-	% 
+	%
 	% 作为我们第一个程序里面就涉及到的数据,
 	% 字符串, 不仅被用于演示程序的执行, 在程序设计过程当中也相当有用
 	%
@@ -442,7 +511,7 @@ double alpha = 1.0, beta = 3.6, theta = 9.9;
 	% 用赋值符号将其覆盖掉
 
 	\begin{columns}[c]
-		\begin{column}{0.8\textwidth}
+		\begin{column}{0.9\textwidth}
 
 			\begin{lstlisting}[style=Java]
 String str = "String";
@@ -471,35 +540,329 @@ pubic class StringConcate{
 
 \end{frame}
 
-%------------------------------------------------
-
-\begin{frame}
+\begin{frame}[fragile]
 
 	%% Contents:
 	% 
 	% 对于一个字符串, 实际上还可以有一些其他的操作
 	% 比如, 我们可以通过charAt方法获得字符串中某一个字符
+	% 也可以用length方法来获得字符串的长度
+	% 不过一定要注意哦, charAt方法的位置是以0开始计数的,
+	% 所以如果是charAt(1), 实际上得到的是第二个字符
+	% 如下例中, 第二行
+	%
+	% 字符串也可以被比较,
+	% 通过compareTo方法, 可以看出两个字符串是否相同,
+	% 如果两个字符串相同, 则会返回一个0值
+	% 否则, 会返回一个差值
+	% 但是, 其实我们在比较字符串的时候怎么会考虑它们的字典序差异呢?
+	% 在要确定是否相等时还要用类似 0 == str.compareTo(str2)的方式
+	% 十分的繁琐
+	% 所以我们一般会用另一个方法, equals, 来进行比较
+	% 这个方法会直接返回两个字符串是否相同, 结果也不是整数值
+	% 而是一个逻辑值, 这样就可以被直接用于各种判断了
+	%
+	% 当然, 这是在判断两个字符串里的字母是否完全一样时用的
+	% 那么如果我们希望忽略大小写呢?
+	% 那就需要使用compareToIgnoreCase和equalsIgnoreCase两个方法了
+	%
+	% 当然, 
+	%
+	% 当然, 对于字符串的操作, 一定也少不了查找给定内容
+	% 这时就需要使用indexOf方法了
+	% indexOf会返回第一次找到给定字符串的位置信息,
+	% 这个信息和我们提供给charAt的一样, 是个整型数
+	%
+	% indexOf是从左到右的搜索, 与之相对应的, 还有lastIndexOf
 	\begin{columns}
 		\begin{column}{0.9\textwidth}
+
+			\begin{lstlisting}[style=Java]
+String foo = "Hello, World!";
+System.out.println(foo.charAt(1)); // => e
+System.out.println(foo.compareTo("hello, world!"));
+System.out.println(foo.equalsIgnoreCase("hello, world!"));
+System.out.println(foo.indexOf("World"));
+      \end{lstlisting}
 
 		\end{column}
 	\end{columns}
 \end{frame}
 
+\subsubsection{Z --- Byte/Short/Integer/Long}
+\begin{frame}[fragile]
+	\frametitle{Integer}
 
 
+	% TODO: With integer operators, like +,-,*,/,%
+	\begin{columns}[c]
+		\begin{column}{0.9\textwidth}
 
 
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+\subsubsection{R --- Float/Double}
+\begin{frame}[fragile]
+	\frametitle{Real numbers}
 
 
+	% TODO: +,-,*,/
+	\begin{columns}[c]
+		\begin{column}{0.9\textwidth}
 
 
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+\subsubsection{Big numbers --- BigInteger/BitDecimal}
+\begin{frame}[fragile]
+	\frametitle{Extremely large numbers}
+
+	\begin{columns}[c]
+		\begin{column}{0.9\textwidth}
 
 
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+\subsubsection{Logical --- Boolean}
+\begin{frame}[fragile]
+	\frametitle{Logical representation, Boolean}
 
 
+	% TODO: With relationship operator like <,>,>=,<=,!=, ...
+	% With logical operator like ||,&&,!
+	\begin{columns}[c]
+		\begin{column}{0.9\textwidth}
 
 
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+\subsection{Bitwise Operation, How those value be calculated in computer}
+\begin{frame}[fragile]
+	\frametitle{Bitwise Operation}
+
+
+	% TODO: Byte, Word, Double Word,
+	% Structure of IEEE 754 Float
+	% sl,sr,xor,or,not(|,&,^,~,<<,>>,>>>)
+	\begin{columns}[c]
+		\begin{column}{0.9\textwidth}
+
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+%------------------------------------------------
+
+\subsection{Variable Assignment --- Cover origin value, or ``set a value for variable''}
+\begin{frame}[fragile]
+	\frametitle{Variable Assignment}
+
+	%% Contents
+	%
+	% 既然讲过了变量的定义, 我们也要重新讲一下变量的赋值
+	%
+	% 其实在上一节课中, 我们已经简单讲过变量赋值相关的东西了
+	% 不知到大家是否还有印象呢
+	%
+
+	\begin{columns}[c]
+		\begin{column}{0.9\textwidth}
+
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+\subsection{Calculate --- Auto Type Conversion}
+\begin{frame}[fragile]
+	\frametitle{Type Conversion}
+
+	% Cast from one to another
+
+	\begin{columns}[c]
+		\begin{column}{0.9\textwidth}
+
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+\subsection{Calculate --- Explicit Type Conversion}
+\begin{frame}[fragile]
+
+	\begin{columns}[c]
+		\begin{column}{0.9\textwidth}
+
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+%------------------------------------------------
+
+\section{Input \& Output}
+\begin{frame}[fragile]
+
+	\begin{columns}[c]
+		\begin{column}{0.9\textwidth}
+
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+\subsection{System.in / System.out}
+\begin{frame}[fragile]
+
+	\begin{columns}[c]
+		\begin{column}{0.9\textwidth}
+
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+\subsection{System.out.print*}
+\begin{frame}[fragile]
+
+	\begin{columns}[c]
+		\begin{column}{0.9\textwidth}
+
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+\subsection{java.util.Scanner}
+\begin{frame}[fragile]
+
+	\begin{columns}[c]
+		\begin{column}{0.9\textwidth}
+
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+%------------------------------------------------
+
+\section{if \dots else \dots --- execute according given condition}
+\begin{frame}[fragile]
+
+	\begin{columns}[c]
+		\begin{column}{0.9\textwidth}
+
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+\subsection{Logical operation --- when shall it be executed}
+\begin{frame}[fragile]
+
+	\begin{columns}[c]
+		\begin{column}{0.9\textwidth}
+
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+\subsection{Logical operation --- and what else if the condition is not true}
+\begin{frame}[fragile]
+
+	\begin{columns}[c]
+		\begin{column}{0.9\textwidth}
+
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+
+\section{while --- how to execute some sentences once or more}
+\begin{frame}[fragile]
+
+	\begin{columns}[c]
+		\begin{column}{0.9\textwidth}
+
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+\subsection{Loop --- while condition do something}
+\begin{frame}[fragile]
+
+	\begin{columns}[c]
+		\begin{column}{0.9\textwidth}
+
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+\subsubsection{Loop --- do something and check wether to continue}
+\begin{frame}[fragile]
+
+	\begin{columns}[c]
+		\begin{column}{0.9\textwidth}
+
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+\subsubsection{Break --- Jump out of the loop}
+\begin{frame}[fragile]
+
+	\begin{columns}[c]
+		\begin{column}{0.9\textwidth}
+
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+\subsubsection{Continue --- Next circle}
+\begin{frame}[fragile]
+
+	\begin{columns}[c]
+		\begin{column}{0.9\textwidth}
+
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
 
 
 
