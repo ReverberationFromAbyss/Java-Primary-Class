@@ -103,7 +103,7 @@
     flexiblecolumns,                % 别问为什么，加上这个
     breaklines      =   true,   % 自动换行，建议不要写太长的行
     columns         =   fixed,  % 如果不加这一句，字间距就不固定，很丑，必须加
-    basewidth       =   0.15cm,
+    basewidth       =   0.16cm,
 		moredelim       =   **[is][\btHL]{`}{`},
     captionpos          =   t,      % 这段代码的名字所呈现的位置，t指的是top上面
     frame               =   lrtb,   % 显示边框
@@ -368,7 +368,7 @@ int y = a * a + a - 8;
 // [...] means following parts are optional
       \end{lstlisting}
 
-			\begin{lstlisting}
+			\begin{lstlisting}[style=Java]
 int foo;      // define a variable called foo
 int bar = 10; // define a variable, whose initial value is 10 and called bar
 // Above we define each variable in a single line
@@ -712,17 +712,17 @@ System.out.println(bar.compareTo(30));
 
 			\begin{lstlisting}[style=Java]
 // float
-System.out.println("基本类型：float 二进制位数：" + Float.SIZE);
-System.out.println("包装类：java.lang.Float");
-System.out.println("最小值：Float.MIN_VALUE=" + Float.MIN_VALUE);
-System.out.println("最大值：Float.MAX_VALUE=" + Float.MAX_VALUE);
+System.out.println("Type: float and how many bits: " + Float.SIZE);
+System.out.println("Wrapper: java.lang.Float");
+System.out.println("Min value: Float.MIN_VALUE = " + Float.MIN_VALUE);
+System.out.println("Max value: Float.MAX_VALUE = " + Float.MAX_VALUE);
 System.out.println();
 
 // double
-System.out.println("基本类型：double 二进制位数：" + Double.SIZE);
-System.out.println("包装类：java.lang.Double");
-System.out.println("最小值：Double.MIN_VALUE=" + Double.MIN_VALUE);
-System.out.println("最大值：Double.MAX_VALUE=" + Double.MAX_VALUE);
+System.out.println("Type: double and how many bits: " + Double.SIZE);
+System.out.println("Wrapper: java.lang.Double");
+System.out.println("Min value: Double.MIN_VALUE = " + Double.MIN_VALUE);
+System.out.println("Max value: Double.MAX_VALUE = " + Double.MAX_VALUE);
 System.out.println(); 
       \end{lstlisting}
 
@@ -877,14 +877,14 @@ System.out.println(foo);
 			\begin{table}
 				\begin{tabular}{l l}
 					\toprule
-					Relationship        & Operator \\
+					Relationship             & Operator \\
 					\midrule
-					Equals              & ==       \\
-					Greater than        & >        \\
-					Less than           & <        \\
-					Greater or equal to & >=       \\
-					Less to equal to    & <=       \\
-					Not Equal           & !=       \\
+					Equals                   & ==       \\
+					Greater than             & >        \\
+					Less than                & <        \\
+					Greater than or equal to & >=       \\
+					Less than or equal to    & <=       \\
+					Not Equal                & !=       \\
 					\bottomrule
 				\end{tabular}
 			\end{table}
@@ -999,7 +999,8 @@ System.out.print(1 < var && 80 > var);
 	%
 	% 不过呢, 我们并不推荐在各种复杂的语句中使用++这样的自增自减运算符
 	% 而是直接把它们单列
-	% 不过, 这里为了演示逻辑, 所以这样写了
+	% 不过, 这里为了演示逻辑运算的特性, 所以这样写了
+	% 本课不会详细区别两种自增运算符
 	% 如果对自增运算感兴趣, 可以在网上查询资料
 	% 或者在课后单独询问
 
@@ -1026,6 +1027,63 @@ public class Logical {
 \begin{frame}[fragile]
 	\frametitle{Bitwise Operation}
 
+	%% Contents:
+	% 
+	% 既然已经讲到了逻辑运算, 我们干脆再深入一些
+	% 讲一讲计算机运算的基础 ---
+	% 位运算
+	%
+	% 讲到位运算, 我们要先了解一些, 有关于位的知识
+	% 大家可以知道, 所有的数据,
+	% 在计算机种都是通过二进制数字存储的
+	% 二进制数字, 实际上和我们的十进制数字相当一致,
+	% 也是有类似个位,十位,百位, 这样的不同进制位的
+	% 不过由于二进制中, 只有0与1, 所以实际上
+	% 并不像十进制这样有这么多的名字
+	% 而是统一用多少多少位来表示
+	% 比如11111, 就是一个5位二进制数
+	%
+	% 不过有些同学也许会注意到
+	% 英文中, 表示十进制数的位数时, 用的是digit
+	% 而在我们表示二进制的时候, 用的是bit
+	% 这是为什么呢
+	% 其实bit就是专门表示像二进制这样只有两个状态的位的
+	% 是digit的一个子集表示
+	%
+	% 大家这也可以了解到, 中文对于位的翻译的来源
+	%
+	% 在计算机中
+	% 由于一些历史悠久的设计问题, 或者说是文化传承
+	% 我们计算机可以操作的最小的数据是8位二进制数
+	% 不知大家有没有想到什么?
+	% 没错, Java的Byte类型就是一个8位二进制整形
+	% 那么这个Byte是什么意思呢
+	% Byte表示字节, 每8位表示一个字节,
+	% 所以说字节, 其实就是计算机可以操作的最小单位
+	% 与之相对应的, 还有kb,mb,gb,tb,eb...
+	% 1 KB(KiB) = 1024 Byte
+	% 1 MB(MiB) = 1024 KB
+	% 这些代换的根源实际上都来自于2^10
+	%
+	% 下面, 大家已经见到了Byte, 那么有没有举一反三,
+	% 想到另外几个整数类型的来源?
+	% 没错
+	% 两个Byte的组合, 在计算机中, 被称作word, 字
+	% 我们的Short型就是存储了一个字, 有16字节
+	% 而后还有double word, 双字, 32字节, 用于int类型
+	% quart word, 四字, 64字节, long类型
+	% 最后, paragraph, 两个quart word, 128字节,
+	% 大到无法被cpu直接计算
+	%
+	% 但是, 大家看到ppt, 既然不论Byte, short, int这些
+	% 都是2的2次方幂倍大小,
+	% 那么为什么它们表示的范围却只有类似
+	% -2的7次方幂到2的7次方幂减1 的这种形式呢?
+	% 因为为了表示符号, 计算机单独使用了一位作为符号位
+	% 为0, 则是正
+	% 为1, 则是负
+	% 所以这些整数就只能用剩下的位数来记录数值了
+	%
 
 	% TODO: Byte, Word, Double Word,
 	% Structure of IEEE 754 Float
@@ -1033,11 +1091,170 @@ public class Logical {
 	\begin{columns}[c]
 		\begin{column}{0.9\textwidth}
 
+			\center{
+				1 Byte = 8 bit\\
+				1 KB(KiB) = $2^{10}$(1024) Byte\\
+				1 MB(MiB) = $2^{10}$(1024) KB \\
+				\dots
+			}
+
+			\begin{table}
+				\begin{tabular}{l l}
+					\toprule
+					Type        & Range                    \\
+					\midrule
+					bit         & 0/1                      \\
+					Byte        & 0000'0000 to 1111'1111   \\
+					Word        & 0x0000 to 0xffff         \\
+					Double Word & 0x00000000 to 0xffffffff \\
+					Quad Word   & ...                      \\
+					\bottomrule
+				\end{tabular}
+			\end{table}
 
 		\end{column}
 	\end{columns}
 
 \end{frame}
+\begin{frame}[fragile]
+
+	%% Contents:
+	% 
+	% 当然, 这些数据类型是有范围有长度的,
+	% 但是数据却不一定按照你给的长度来
+	% 万一有些时候, 一不小心加多了怎么办呢?
+	% 这种情况叫做溢出,
+	% 为了减小这些问题的影响, 并且方便各种运算
+	% 我们为这些数值制定了
+	% 原码,反码,补码的规则
+	%
+	% 以下, 将数据实际表示的东西称作真值, True Form
+	% 原码是Sign-Mangnitude, 反码为 1's Complement Code
+	% 补码为2's Complement Code
+	%
+	% 对于正数, 他的反码补码都为自己的原码
+	% 而对于一个负数, 他的反码为原码除符号位全取反,
+	% 如ppt所示, 可以看到, 对于-128, 他的反码为1000,0000
+	% 而补码, 则是将它的补码加1,
+	% 这样, 当我们取得了一个数的反码时,
+	% 这个数的反码加上这个数的补码
+	% 在忽略溢出后, 总是等于0
+	% 这样, 加法和减法就可以被统一成为加法运算
+	%
+	% 下面是一个例子
+	% 比如: 我们要让 5 + (-3) (Write them onto the write board)
+	% 首先可以将它们全都转换成补码形式得到 0101, 和 1101
+	% 然后, 就是对它们进行加法运算
+	% 0101 + 1101 = 10010
+	% 这里, 溢出一位
+	% 所以我们把他抛弃掉, 最后得到0010, 值为2, 和5-3的结果一致
+
+	\begin{columns}[c]
+		\begin{column}{0.9\textwidth}
+
+			\begin{table}
+				\begin{tabular}{l l l l l}
+					\toprule
+					Code                & Form      & value & Form(-)   & value \\
+					\midrule
+					True Form           & 0111,1111 & 127   & 1111,1111 & -128  \\
+					Sign-Mangnitude     & 0111,1111 &       & 1111,1111 &       \\
+					1's Complement Code & 0111,1111 &       & 1000,0000 &       \\
+					2's Complement code & 0111,1111 &       & 1000,0001 &       \\
+					\bottomrule
+				\end{tabular}
+			\end{table}
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+\begin{frame}[fragile]
+
+	%% Contents:
+	% 
+	% 不过, 不确定大家是否有曾对浮点数的误差有所疑惑?
+	%
+	% 实际上, 这是由于我们计算机中对于浮点数的表示导致的问题
+	%
+	% 我们目前一直使用ieee 754 标准来表示浮点数
+	% 它规定 浮点数的值是用 V = (-1) ^ s * M * 2^E 这个公式来计算的
+	% 这也就导致
+	% 当我们希望表示的数据过大时,
+	% 它会逐渐变得越来越宽泛, 越来越不精确
+	%
+	% 如下所示, 这里就是一个32位的浮点数
+	% 由此可以看到, 它的符号位占了一位, 用以表示数据的正负
+	% exponent表示它的次幂, 也就是公式中E的部分
+	% fraction则是基数, 也就是公式中的M
+	%
+
+	\begin{columns}[c]
+		\begin{column}{0.9\textwidth}
+
+			\[
+				V = (-1)^{S} * M * 2^E
+			\]
+
+			\begin{table}
+				\begin{tabular}{l l l}
+					\toprule
+					Sign   & exponent & fraction                \\
+					\midrule
+					0      & 01111100 & 01000000000000000000000 \\
+					1 bits & 8 bits   & 23 bits                 \\
+					\bottomrule
+				\end{tabular}
+			\end{table}
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+\begin{frame}[fragile]
+
+	%% Contents:
+	% 
+	% 既然讲解了大多数类型的表示方法,
+	% 现在也该要讲解一下什么是位运算了
+	%
+	% 实际上, 位运算和逻辑运算极其相似
+	% 毕竟, 大家可以想一想
+	% 逻辑运算处理的是真, 假两个值
+	% 而计算机中的一位也只有0,1两种表示
+	% 所以它们的运算是很有借鉴意义的
+	%
+	% 大家可以看到这里的and, 和or
+	% 和逻辑运算里的两个\&, 两个|很像是不是
+	% 它们其实就是位运算中的与与或
+	% 它们对每个数字, 按照位数, 取得结果
+
+	\begin{columns}[c]
+		\begin{column}{0.98\textwidth}
+
+			\begin{table}
+				\begin{tabular}{l l l l l l l}
+					\toprule
+					Operation     & Operator   & Form           & A    & B    & n & Example \\
+					\midrule
+					And           & \&         & A \& B         & 1010 & 1100 &   & 1000    \\
+					Or            & |          & A | B          & 1010 & 1100 &   & 1110    \\
+					Xor           & $\string^$ & A $\string^$ B & 1010 & 1100 &   & 0110    \\
+					Negative      & $\sim$     & $\sim$ A       & 1010 &      &   & 0101    \\
+					              &            &                &                           \\
+					Shift left    & < <        & A < < n        & 1010 &      & 2 & 10/1000 \\
+					Shift right   & > >        & A > > n        & 1010 &      & 1 & 1101/0  \\
+					SHR (no sign) & > > >      & A > > > n      & 1010 &      & 1 & 0101/0  \\
+					\bottomrule
+				\end{tabular}
+			\end{table}
+			* SHR is a short cut for Shift right
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
 
 %------------------------------------------------
 
