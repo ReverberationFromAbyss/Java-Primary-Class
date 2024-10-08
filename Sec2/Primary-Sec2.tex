@@ -1,35 +1,14 @@
-%----------------------------------------------------------------------------------------
-%  PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
-%----------------------------------------------------------------------------------------
+\documentclass[en, 11pt, xcolor=dvipsnames]{beamer}
+\usepackage[en]{infocoBeamer}
 
-\documentclass[
-  11pt, % Set the default font size, options include: 8pt, 9pt, 10pt, 11pt, 12pt, 14pt, 17pt, 20pt
-  %t, % Uncomment to vertically align all slide content to the top of the slide, rather than the default centered
-  %aspectratio=169, % Uncomment to set the aspect ratio to a 16:9 ratio which matches the aspect ratio of 1080p and 4K screens and projectors
-  xcolor=dvipsnames
-]{beamer}
+\definecolor{hrefcol}{RGB}{0, 0, 255} % Example: blue color
 
-\graphicspath{{Images/}{./}} % Specifies where to look for included images (trailing slash required)
-
-\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule for better rules in tables
-
-\usepackage{xeCJK}
-%\setCJKsansfont{黑体}
-\usepackage{multicol}
-\usepackage{wrapfig}
-
-\usepackage{ctex}
-\usepackage{soul}
-\usepackage{xcolor}
-\usepackage{color}
-
-\usepackage{courier}
-\usepackage{lmodern}
+% -------------------------------------------------------------------------------------
 \usepackage{tikz}
 \usetikzlibrary{shapes.callouts, shadows, calc}
 \usepackage{listings}
 
-\usepackage{fontspec-xetex}
+%\usepackage{fontspec-xetex}
 
 \tikzset{note/.style={rectangle collout, rounded corners,fill=grap!20, drop shadow, font=\footnotesize}}
 
@@ -78,14 +57,14 @@
 %}
 
 \lstset{
-    basicstyle          =   \ttfamily,          % 基本代码风格
+  basicstyle            =   \scriptsize\ttfamily,          % 基本代码风格
     keywordstyle        =   \bfseries,          % 关键字风格
-    commentstyle        =   \tt\itshape,  % 注释的风格，斜体
+    commentstyle        =   \scriptsize\tt\itshape,  % 注释的风格，斜体
     stringstyle         =   \tt\itshape,  % 字符串风格
     flexiblecolumns,                % 别问为什么，加上这个
     numbers             =   left,   % 行号的位置在左边
     showspaces          =   false,  % 是否显示空格，显示了有点乱，所以不现实了
-    numberstyle         =   \zihao{-5}\ttfamily,    % 行号的样式，小五号，tt等宽字体
+    numberstyle         =   \ttfamily,    % 行号的样式，小五号，tt等宽字体
     showstringspaces    =   false,
     captionpos          =   t,      % 这段代码的名字所呈现的位置，t指的是top上面
     frame               =   lrtb,   % 显示边框
@@ -93,77 +72,44 @@
 
 \lstdefinestyle{Java}{
     language        =   Java,
-    commentstyle    =   \color{red}\ttfamily,
-    basicstyle      =   \zihao{-5}\ttfamily,
-    keywordstyle    =   \color{blue}\bfseries,
+    commentstyle    =   \scriptsize\color{red}\ttfamily,
+    basicstyle      =   \scriptsize\ttfamily,
+    keywordstyle    =   \scriptsize\color{blue}\bfseries,
     keywordstyle    =   [2] \color{teal},
-    stringstyle     =   \color{magenta}\tt,
-    numberstyle     =   \zihao{-6}\ttfamily,
-    showstringspaces    =   false,
+    stringstyle     =   \scriptsize\color{magenta}\tt,
+    numberstyle     =   \tiny\ttfamily,
+    showstringspaces=   false,
     flexiblecolumns,                % 别问为什么，加上这个
     breaklines      =   true,   % 自动换行，建议不要写太长的行
     columns         =   fixed,  % 如果不加这一句，字间距就不固定，很丑，必须加
-    basewidth       =   0.16cm,
+    basewidth       =   0.15cm,
 		moredelim       =   **[is][\btHL]{`}{`},
-    captionpos          =   t,      % 这段代码的名字所呈现的位置，t指的是top上面
-    frame               =   lrtb,   % 显示边框
+    captionpos      =   t,      % 这段代码的名字所呈现的位置，t指的是top上面
+    frame           =   lrtb,   % 显示边框
 }
+% -------------------------------------------------------------
 
-\usetheme{Madrid}
-\usefonttheme{default} % Typeset using the default sans serif font
-\usepackage{palatino} % Use the Palatino font for serif text
-\usepackage[default]{opensans} % Use the Open Sans font for sans serif text
+% meta-data
+\title{Java Programming Language \\ Simple Guide} % The short title in the optional parameter appears at the bottom of every slide, the full title in the main parameter is only on the title page
+\subtitle{Infoco Programming Classes} % Presentation subtitle, remove this command if a subtitle isn't required
+\author{Ug. Sihang Sha \and Pg. Muxi Qiao} % Presenter name(s), the optional parameter can contain a shortened version to appear on the bottom of every slide, while the main parameter will appear on the title slide
+\institute{Xiann' Jiaotong Livepool University \\ \smallskip \textit{infoco@xjtlu.edu.cn}} % Your institution, the optional parameter can be used for the institution shorthand and will appear on the bottom of every slide after author names, while the required parameter is used on the title slide and can include your email address or additional information on separate lines
+\date{\today} % Presentation date or conference/meeting name, the optional parameter can contain a shortened version to appear on the bottom of every slide, while the required parameter value is output to the title slide
 
-\useinnertheme{circles}
+%-------------------------------------------------------------------------------------------------------
 
-%----------------------------------------------------------------------------------------
-%  PRESENTATION INFORMATION
-%----------------------------------------------------------------------------------------
-
-\title[Java Sec.2]{Java Programming Language Simple Guide \\ Java 基础课} % The short title in the optional parameter appears at the bottom of every slide, the full title in the main parameter is only on the title page
-
-\subtitle{Infoco Computer Club Programming Classes \\ } % Presentation subtitle, remove this command if a subtitle isn't required
-
-\author[SSH. \and MXQ. (TA)]{Ug. Sihang Sha \and Pg. Muxi Qiao} % Presenter name(s), the optional parameter can contain a shortened version to appear on the bottom of every slide, while the main parameter will appear on the title slide
-
-\institute[XJTLU InfoCo Club]{Xiann' Jiaotong Livepool University \\ \smallskip \textit{infoco@xjtlu.edu.cn}} % Your institution, the optional parameter can be used for the institution shorthand and will appear on the bottom of every slide after author names, while the required parameter is used on the title slide and can include your email address or additional information on separate lines
-
-\date[\today]{\today} % Presentation date or conference/meeting name, the optional parameter can contain a shortened version to appear on the bottom of every slide, while the required parameter value is output to the title slide
-
-%----------------------------------------------------------------------------------------
-
+% document body
+% ------------------------------------------------------------------------------------------------------
 \begin{document}
 
-%----------------------------------------------------------------------------------------
-%  TITLE SLIDE
-%----------------------------------------------------------------------------------------
+\maketitle
 
-\begin{frame}
-	\titlepage % Output the title slide, automatically created using the text entered in the PRESENTATION INFORMATION block above
+% ------------------------------------------------------------------------------------------------------
 
-\end{frame}
+% -----------------------------------------------
 
-
-%----------------------------------------------------------------------------------------
-%  TABLE OF CONTENTS SLIDE
-%----------------------------------------------------------------------------------------
-
-% The table of contents outputs the sections and subsections that appear in your presentation, specified with the standard \section and \subsection commands. You may either display all sections and subsections on one slide with \tableofcontents, or display each section at a time on subsequent slides with \tableofcontents[pausesections]. The latter is useful if you want to step through each section and mention what you will discuss.
-
-\begin{frame}[allowframebreaks]
-	\frametitle{Presentation Overview} % Slide title, remove this command for no title
-
-	\tableofcontents % Output the table of contents (all sections on one slide)
-	%\tableofcontents[pausesections] % Output the table of contents (break sections up across separate slides)
-
-\end{frame}
-
-%----------------------------------------------------------------------------------------
-%  PRESENTATION BODY SLIDES
-%----------------------------------------------------------------------------------------
-
-\section{Variables, And Type of Variables}
 %------------------------------------------------
+\section{Variables, And Type of Variables}
 \begin{frame}[fragile]
 	\frametitle{Variables}
 
@@ -200,8 +146,7 @@
 0x7fffffff
 017777777777
 1.0
-2e4
-\end{lstlisting}
+2e4\end{lstlisting}
 
 				\end{column}
 
@@ -213,8 +158,7 @@
 int foo = 2147483647;
 int bar = -2147483648;
 double real = 1.0;
-double var = 3e1;
-\end{lstlisting}
+double var = 3e1;\end{lstlisting}
 
 				\end{column}
 			\end{columns}
@@ -224,9 +168,7 @@ double var = 3e1;
 
 \end{frame}
 
-%------------------------------------------------
 \subsection{Data, and Variables which are assigned data}
-
 \begin{frame}[fragile]
 	\frametitle{Data, and Variables which are assigned data}
 
@@ -275,34 +217,38 @@ double var = 3e1;
 	\begin{columns}[c]
 		\begin{column}{0.9\textwidth}
 
-			Data, is something we manipulate in programming and contains some information.\\
+			{\scriptsize
+				{
+					Data, is something we manipulate in programming and contains some information.\\
 
-			Value, is one represent for data.\\
+					Value, is one represent for data.\\
 
-			Variables, are some containers that hold those data.
-			Or, officially, a variable is a named unit of data that is assigned a value.
+					Variables, are some containers that hold those data.
+					Or, officially, a variable is a named unit of data that is assigned a value.
+				}
+			}
 
 			\begin{columns}[c]
 				\begin{column}{0.5\textwidth}
-					\[
-						f(x) = x^2 + x - 8
-					\]
+					{\large
+						\[
+							f(x) = x^2 + x - 8
+						\]
+					}
 				\end{column}
 				\begin{column}{0.5\textwidth}
 					\begin{lstlisting}[style=Java]
 int f(int x){
   return x * x + x - 8;
-}
-          \end{lstlisting}
+}\end{lstlisting}
 
 					\begin{lstlisting}[style=Java]
 int d = f(8);
-// which is same as 
+// which is same as
 int g = 8 * 8 + 8 - 8;
 // or, even
 int a = 8;
-int y = a * a + a - 8;
-          \end{lstlisting}
+int y = a * a + a - 8;\end{lstlisting}
 				\end{column}
 			\end{columns}
 
@@ -365,8 +311,7 @@ int y = a * a + a - 8;
                 [,...]
                 ...;
 // <...> means compent and its meaning
-// [...] means following parts are optional
-      \end{lstlisting}
+// [...] means following parts are optional\end{lstlisting}
 
 			\begin{lstlisting}[style=Java]
 int foo;      // define a variable called foo
@@ -374,8 +319,7 @@ int bar = 10; // define a variable, whose initial value is 10 and called bar
 // Above we define each variable in a single line
 double a,b;   // define two variable, one is a, and the other is b
 double read = 1.0, pi = 3.14;
-double alpha = 1.0, beta = 3.6, theta = 9.9;
-      \end{lstlisting}
+double alpha = 1.0, beta = 3.6, theta = 9.9;\end{lstlisting}
 
 		\end{column}
 	\end{columns}
@@ -435,11 +379,12 @@ double alpha = 1.0, beta = 3.6, theta = 9.9;
 	\begin{columns}[c]
 		\begin{column}{0.9\textwidth}
 
+			\footnotesize
 			\begin{table}
 				\begin{tabular}{l l l}
-					\toprule
+					%\toprule
 					Type      & Defination   & default Form         \\
-					\midrule
+					%\midrule
 					String    & String foo;  & ""                   \\
 					          &              &                      \\
 					Byte      & byte foo;    & 0x0 / 0 / 00 / 0b0   \\
@@ -454,7 +399,7 @@ double alpha = 1.0, beta = 3.6, theta = 9.9;
 					          &              &                      \\
 					Boolean   & boolean foo; & false                \\
 
-					\bottomrule
+					%\bottomrule
 				\end{tabular}
 			\end{table}
 
@@ -537,8 +482,7 @@ double alpha = 1.0, beta = 3.6, theta = 9.9;
 String str = "String";
 str + "foo"; // will produce "Stringfoo"
 str`.concat("bar")`; // will produce "Stringbar"
-"String".concat("bar"); // will produce "Stringbar"
-      \end{lstlisting}
+"String".concat("bar"); // will produce "Stringbar"\end{lstlisting}
 
 
 			\begin{lstlisting}[style=Java]
@@ -551,8 +495,7 @@ pubic class StringConcate{
     System.out.println("This is ".concat("C, they all my kids."));
     System.out.println(str);
   }// ! main
-}
-      \end{lstlisting}
+}\end{lstlisting}
 
 
 		\end{column}
@@ -603,8 +546,7 @@ String foo = "Hello, World!";
 System.out.println(foo.charAt(1)); // => e
 System.out.println(foo.compareTo("hello, world!"));
 System.out.println(foo.equalsIgnoreCase("hello, world!"));
-System.out.println(foo.indexOf("World"));
-      \end{lstlisting}
+System.out.println(foo.indexOf("World"));\end{lstlisting}
 
 		\end{column}
 	\end{columns}
@@ -653,15 +595,15 @@ System.out.println(foo.indexOf("World"));
 
 			\begin{table}
 				\begin{tabular}{l l l}
-					\toprule
+					%\toprule
 					Type  & Wrapper & Range                                                   \\
-					\midrule
+					%\midrule
 					byte  & Byte    & $ -2^{7} ~ 2^{7} - 1 $ (-128 \dots 127)                 \\
 					short & Short   & $ -2^{15} ~ 2^{15} - 1 $ (-32768 \dots 32767)           \\
 					int   & Integer & $ -2^{31} ~ 2^{31} - 1 $ (-2147483648 \dots 2147483647) \\
 					long  & Long    & $ -2^{63} ~ 2^{63} - 1 $ (-9,223,372,036,854,775,808    \\
 					      &         & \dots 9,223,372,036,854,775,807)                        \\
-					\bottomrule
+					%\bottomrule
 				\end{tabular}
 			\end{table}
 
@@ -671,8 +613,7 @@ Integer bar = 10;
 String barInString = bar.toString();
 System.out.println(bar.equals(foo));
 // we should use equals to compare Integers and other wrapper
-System.out.println(bar.compareTo(30));
-  \end{lstlisting}
+System.out.println(bar.compareTo(30));\end{lstlisting}
 
 		\end{column}
 	\end{columns}
@@ -723,8 +664,7 @@ System.out.println("Type: double and how many bits: " + Double.SIZE);
 System.out.println("Wrapper: java.lang.Double");
 System.out.println("Min value: Double.MIN_VALUE = " + Double.MIN_VALUE);
 System.out.println("Max value: Double.MAX_VALUE = " + Double.MAX_VALUE);
-System.out.println(); 
-      \end{lstlisting}
+System.out.println(); \end{lstlisting}
 
 		\end{column}
 	\end{columns}
@@ -762,8 +702,7 @@ System.out.println("Value of bar is: " + bar);
 // We use String to construct them instead
 foo = new BigInteger("9223372036854775809");
 bar = new BigDecimal("0.1");
-System.out.println("Value of bar is: " + bar);
-      \end{lstlisting}
+System.out.println("Value of bar is: " + bar);\end{lstlisting}
 
 		\end{column}
 	\end{columns}
@@ -815,8 +754,7 @@ System.out.println(foo.mutiply(BigInteger.TWO));
 System.out.println(foo.devide(BigInteger.TWO));
 System.out.println(foo.mod(BigInteger("9")));
 System.out.println(foo.pow(BigInteger.TWO));
-System.out.println(foo);
-      \end{lstlisting}
+System.out.println(foo);\end{lstlisting}
 
 		\end{column}
 	\end{columns}
@@ -876,22 +814,21 @@ System.out.println(foo);
 
 			\begin{table}
 				\begin{tabular}{l l}
-					\toprule
+					%\toprule
 					Relationship             & Operator \\
-					\midrule
+					%\midrule
 					Equals                   & ==       \\
 					Greater than             & >        \\
 					Less than                & <        \\
 					Greater than or equal to & >=       \\
 					Less than or equal to    & <=       \\
 					Not Equal                & !=       \\
-					\bottomrule
+					%\bottomrule
 				\end{tabular}
 			\end{table}
 
 			\begin{lstlisting}[style=Java]
-System.out.println(1==1);
-      \end{lstlisting}
+System.out.println(1==1);\end{lstlisting}
 
 		\end{column}
 	\end{columns}
@@ -921,13 +858,11 @@ System.out.println(1==1);
 
 			\begin{lstlisting}[style=Java]
 boolean foo = true;
-Boolean bar = new Boolean(foo);
-      \end{lstlisting}
+Boolean bar = new Boolean(foo);\end{lstlisting}
 
 			\begin{lstlisting}[style=Java]
 int var = 20;
-System.out.print(1 < var && 80 > var);
-      \end{lstlisting}
+System.out.print(1 < var && 80 > var);\end{lstlisting}
 
 		\end{column}
 	\end{columns}
@@ -945,24 +880,26 @@ System.out.print(1 < var && 80 > var);
 	% 否运算, 使得原表达式结果相反
 
 	\begin{columns}[c]
-		\begin{column}{0.9\textwidth}
+		\begin{column}{0.98\textwidth}
 
+			\center\scriptsize
 			\begin{table}
 				\begin{tabular}{l l l l l l}
-					\toprule
+					%%\toprule
 					Logic & Operator & Form     & A     & B     & Result \\
-					\midrule
+					      &          &          &       &       &        \\
+					%%\midrule
 					And   & \&\&     & A \&\& B & true  & true  & true   \\
 					      &          &          & true  & false & false  \\
 					      &          &          & false & true  & false  \\
 					      &          &          & false & false & false  \\
-					Or    & ||       & A || B   & true  & true  & true   \\                \\
+					Or    & ||       & A || B   & true  & true  & true   \\
 					      &          &          & true  & false & true   \\
 					      &          &          & false & true  & true   \\
 					      &          &          & false & false & false  \\
-					Not   & !        & ! A      & true  &       & false  \\                                            \\
+					Not   & !        & ! A      & true  &       & false  \\
 					      &          &          & false &       & true   \\
-					\bottomrule
+					%%\bottomrule
 				\end{tabular}
 			\end{table}
 
@@ -1015,8 +952,7 @@ public class Logical {
     System.out.println("Whole resule is " + b);
     System.out.println("while a is ... :" + a);
   } // ! main
-}
-      \end{lstlisting}
+}\end{lstlisting}
 
 		\end{column}
 	\end{columns}
@@ -1100,15 +1036,15 @@ public class Logical {
 
 			\begin{table}
 				\begin{tabular}{l l}
-					\toprule
+					%\toprule
 					Type        & Range                    \\
-					\midrule
+					%\midrule
 					bit         & 0/1                      \\
 					Byte        & 0000'0000 to 1111'1111   \\
 					Word        & 0x0000 to 0xffff         \\
 					Double Word & 0x00000000 to 0xffffffff \\
 					Quad Word   & ...                      \\
-					\bottomrule
+					%\bottomrule
 				\end{tabular}
 			\end{table}
 
@@ -1154,14 +1090,14 @@ public class Logical {
 
 			\begin{table}
 				\begin{tabular}{l l l l l}
-					\toprule
+					%\toprule
 					Code                & Form      & value & Form(-)   & value \\
-					\midrule
+					%\midrule
 					True Form           & 0111,1111 & 127   & 1111,1111 & -128  \\
 					Sign-Mangnitude     & 0111,1111 &       & 1111,1111 &       \\
 					1's Complement Code & 0111,1111 &       & 1000,0000 &       \\
 					2's Complement code & 0111,1111 &       & 1000,0001 &       \\
-					\bottomrule
+					%\bottomrule
 				\end{tabular}
 			\end{table}
 
@@ -1198,12 +1134,12 @@ public class Logical {
 
 			\begin{table}
 				\begin{tabular}{l l l}
-					\toprule
+					%\toprule
 					Sign   & exponent & fraction                \\
-					\midrule
+					%\midrule
 					0      & 01111100 & 01000000000000000000000 \\
 					1 bits & 8 bits   & 23 bits                 \\
-					\bottomrule
+					%\bottomrule
 				\end{tabular}
 			\end{table}
 
@@ -1234,9 +1170,9 @@ public class Logical {
 
 			\begin{table}
 				\begin{tabular}{l l l l l l l}
-					\toprule
+					%\toprule
 					Operation     & Operator   & Form           & A    & B    & n & Example \\
-					\midrule
+					%\midrule
 					And           & \&         & A \& B         & 1010 & 1100 &   & 1000    \\
 					Or            & |          & A | B          & 1010 & 1100 &   & 1110    \\
 					Xor           & $\string^$ & A $\string^$ B & 1010 & 1100 &   & 0110    \\
@@ -1245,7 +1181,7 @@ public class Logical {
 					Shift left    & < <        & A < < n        & 1010 &      & 2 & 10/1000 \\
 					Shift right   & > >        & A > > n        & 1010 &      & 1 & 1101/0  \\
 					SHR (no sign) & > > >      & A > > > n      & 1010 &      & 1 & 0101/0  \\
-					\bottomrule
+					%\bottomrule
 				\end{tabular}
 			\end{table}
 			* SHR is a short cut for Shift right
@@ -1301,8 +1237,7 @@ bar -= 1; // same as bar = (byte)(bar - 1);
 System.out.println(bar); // => 8
 long var = 7;
 var *= 9; // same as var = var * 9l;
-System.out.println(var); // => 63
-      \end{lstlisting}
+System.out.println(var); // => 63\end{lstlisting}
 
 		\end{column}
 	\end{columns}
@@ -1335,10 +1270,15 @@ System.out.println(var); // => 63
 	\begin{columns}[c]
 		\begin{column}{0.9\textwidth}
 
-			Low  ------------------------------------> High
+			{\center
+				{
+					Low  ------------------------------------> High
 
-			byte,short,char —> int —> long —> float —> double
+					byte,short,char —> int —> long —> float —> double
+				}
+			}
 
+			\bigskip %
 
 			Each operand on higher position will resule whole
 			expression returns a value in its type
@@ -1387,14 +1327,45 @@ System.out.println(var); // => 63
 float var = 12.89f;
 int bar = (int) var;
 System.out.println(var);
-System.out.println(bar);
-      \end{lstlisting}
+System.out.println(bar);\end{lstlisting}
 
 			f in `12.89f' is a conversion, aims to tell the java compiler
 			that the number is a float, rather than double.\\
 
 			l in `31l' is same, tell the compiler that the number is a long type
 			integer, rather than a int one.
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+\begin{frame}[fragile]
+
+	%% Contents:
+	% 
+	% 既然基本数据类型的转换是这个样子,
+	% 那么根据之前的经验,
+	% 非基本数据类型是不是就没法用这种方式转换类型了?
+	%
+	% 答案几乎是肯定的
+	% 那么对于String和整型数, 浮点型数的交换, 要怎么做?
+	%
+	% 大家看到代码
+	% 我们可以用如ppt所示的方式来将它们转换
+	% 很方便对吧
+	%
+	% 不过不同的类, 互相转换的方式也不同,
+	% 所以, 我们会在遇见需要转换数据的时候在单独讲解的呢
+
+	\begin{columns}[c]
+		\begin{column}{0.9\textwidth}
+
+			\begin{lstlisting}[style=Java]
+String str = "123";
+int foo = Integer.parseInt(str);
+str = "1.23";
+double bar = Double.parseDouble(str);
+      \end{lstlisting}
 
 		\end{column}
 	\end{columns}
@@ -1435,8 +1406,7 @@ System.out.println(bar);
 
 			\begin{lstlisting}
 System.in.println("Hello, World!");
-// An Example for Input
-      \end{lstlisting}
+// An Example for Input\end{lstlisting}
 
 			Data are printed in the form of stream.
 
@@ -1463,12 +1433,30 @@ System.in.println("Hello, World!");
 	% 它是我们所有程序都默认会带有的一个输入
 	% 我们在终端中输入的任何字符都会被这个输入接收
 	% 类似的, System.out实际上是 "标准输出"
-	% 他输出的东西默认会显示在终端,
-	% 也就是我们会见到的黑框框, 中
+	% 他输出的东西默认会显示在终端, 也就是我们会见到的黑框框, 中
+	%
+	% 大家可以看到ppt上所示的代码
+	% 并且尝试运行一下
+	%
+	% 当这个程序运行起来以后
+	% 应当会 "卡" 在那里
+	% 直到我们用键盘输入什么, 并且敲下回车以后, 才会输出一个值
+	% 这个值, 会是你输入的第一个字母
 
 	\begin{columns}[c]
 		\begin{column}{0.9\textwidth}
 
+			\begin{lstlisting}[style=Java]
+import java.io.*;
+
+pulic class Read {
+  public static void main(String[] args) throws IOException {
+    byte[] c = new byte[1];
+    System.in.read(c);
+    // Input someting here when the program is running
+    System.out.println((char)c[0]);
+  }
+}\end{lstlisting}
 
 		\end{column}
 	\end{columns}
@@ -1478,9 +1466,82 @@ System.in.println("Hello, World!");
 \subsection{System.out.print*}
 \begin{frame}[fragile]
 
+	%% Contents:
+	%
+	% 虽然我们是第一次接触输入,
+	% 但是, 我们其实早就已经和输出打各种交道了
+	% 从第一节课中的hello world
+	% 到前面各页ppt中的例子, 都有着println的影子
+	% println就是我们最常用到的输出方法之一
+	%
+	% 实际上, 对于输出
+	% 我们有各种以print balabala命名的方法
+	%
+	% 大家可以看到表格
+	% 这里展示了print, println, printf
+	% 它们分别表示, 输入, 输出并换行, 和格式化输出
+
 	\begin{columns}[c]
 		\begin{column}{0.9\textwidth}
 
+			\begin{lstlisting}[style=Java]
+public class IOStream{
+  public static void main(String[] args){
+    System.out.print("Hello, ");
+    // This will not truncate the line
+    System.out.println("World!");
+    // But this one will
+    System.out.printf("Format out put a intget: \%d $\backslash$n", 21);
+    // And this one can control how should a data be printed
+  }
+}\end{lstlisting}
+
+			Each element in format string provided for printf looks like this:\\
+
+			{\verb- %[argument\_index$][flags][width][.precision]conversion -}
+
+			It seems to complex?\\
+
+			Don't worry\dots
+
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+\begin{frame}[fragile]
+
+	%% Contents:
+	%
+	% 大家可以看到下表, 这个表格展示了我们可以使用的控制字串,
+	% 以及它们的效果
+
+	\begin{columns}[c]
+		\begin{column}{0.9\textwidth}
+
+			\center\footnotesize
+			\begin{table}[c]
+				\begin{tabular}[c]{l l l l}
+					Conversion & Description         & Example        & Output                   \\
+					\hline
+					\%s        & string              & ("\%s", "str") & str                      \\
+					\%c        & character           & ("\%c", 'c')   & c                        \\
+					\%b        & boolean             & ("\%b", true)  & true                     \\
+					\%d        & decimal integer     & ("\%d", 12)    & 12                       \\
+					\%x        & hexdecimal integer  & ("\%h", 10)    & 0xa                      \\
+					\%o        & octeciaml integer   & ("\%o", 8)     & 010                      \\
+					\%f        & float               & ("\%f", 1.0)   & 1.0                      \\
+					\%a        & float in hexdecimal & ("\%a", 1.0)   & 0x1.0                    \\
+					\%e        & scienfic notation   & ("\%a", 1.0)   & 1.0e+0                   \\
+					\%g        & gernal float        &                &                          \\
+					\%h        & hash code           &                &                          \\
+					\%\%       & per cent note       & ("\%\%")       & \%                       \\
+					\%n        & new line            & ("\%n")        & same as $"\backslash n"$ \\
+					\%tm       & time type           &                &                          \\
+					\%td       &                     &                &                          \\
+					\hline
+				\end{tabular}
+			\end{table}
 
 		\end{column}
 	\end{columns}
@@ -1490,9 +1551,57 @@ System.in.println("Hello, World!");
 \subsection{java.util.Scanner}
 \begin{frame}[fragile]
 
+	%% Contents:
+	%
+	% 大家既然已经简单了解过了输入
+	% 也要学习一下怎么样输出
+	%
+	% 在上面的例子当中, 我们可以发现, 输入的使用要比输出繁琐的多
+	% 所以, 我们一般不会直接使用System.in对象
+	% 而是使用各种的辅助功能
+	%
+	% 大家看下面的代码
+	% 我们的高亮行, 定义了一个叫做input的变量
+	% 这个变量是什么呢?
+	% 它其实也是一个对象, 主要用于从标准输入中获取一些数据
+	% 毕竟, 大家看它的类型, Scanner
+	% 扫描仪
+	% 大概也可以猜出它的作用
+	%
+	% 这个对象有很多的成员方法
+	% 但是我们常用的却只有几个
+	% 第一个, 就是下面一行展示的
+	% nextInt方法, 它的作用, 是从输入中找到一个整数, 并且返回出来
+	% 这个返回出来的值, 就可以被赋给任何你想要的int类型变量
+	% 类似的, 还有一个nextDouble方法, 与nextInt相似,
+	% 唯一的区别就是它主要用于获取浮点数
+	% 而看到它的名字, 也可以知道, 它返回的应该是个double类型
+	%
+	% 下面, 就到了next方法和nextLine方法
+	% 这里的两个方法都是用于获取字符串的
+	% next获取到的会是一串任意的字符串,
+	% 只要遇见空格或者任何其他的分隔符就会截止
+	% 而nextLine则会读取直到遇见回车
+	% 这两个的差异大约就像print和println吧
+	%
+
 	\begin{columns}[c]
 		\begin{column}{0.9\textwidth}
 
+			\begin{lstlisting}[style=Java]
+import java.util.Scanner;
+
+public class InputDemo {
+  public static void main(String[] args) {
+    `Scanner input = new Scanner(System.in)`;
+
+    int a = input.nextInt();
+    String foo = input.next();
+    foo = input.nextLine();
+
+    input.close();
+  } // ! main
+}\end{lstlisting}
 
 		\end{column}
 	\end{columns}
@@ -1503,10 +1612,68 @@ System.in.println("Hello, World!");
 
 \section{if \dots else \dots --- execute according given condition}
 \begin{frame}[fragile]
+	\frametitle{If \dots and else \dots}
+
+	%% Contents:
+	%
+	% 我们有了变量, 有了逻辑运算, 也可以确实使得变量变化了
+	% 现在也该要讲一讲分支语句了
+	%
+	% 分支语句, 之所以会被称为分支语句
+	% 一大原因就是它使得代码的执行可以走向不同的方向了
+	%
+	% 大家或许见过流程图吧
+	% 我们的程序也完全可以用流程图来表示
+	% 程序从一个起点开始执行
+	% 经过了分支语句, 它就变成两条路径了
+	%
+	%                     * Beginner
+	%                     |
+	%                     |
+	%                     branch sentence
+	%                    /\
+	%                   /  \
+	%                  /    \
+	%                 /      \
+	%                |        |
+	%                |        |
+	%                * dosth1 * dosth2
+	%                |       /
+	%                |      /
+	%                |     /
+	%                |    /
+	%                |   /
+	%                |  /
+	%                | /
+	%                * end
+	% (draw on the write board)
+	%
+	% 我们这节课将讲解我们最常用的一种分支语句
+	% if...else语句
+	%
+	% 大家可以看到这里的一个例子
+	% 大家比对一下这个流程图, 这个程序和这个流程图的大体逻辑是否是一致的呢?
+	%
 
 	\begin{columns}[c]
 		\begin{column}{0.9\textwidth}
 
+			\begin{lstlisting}[style=Java]
+import java.util.Scanner;
+
+public class IfElse {
+  public static void main(String[] args) {
+    Scanner input = new Scanner(System.in);
+
+    int val = input.nextInt();
+
+    if((val % 2) == 0){
+      System.out.println("Input is even");
+    } else {
+      System.out.println("Input is odd");
+    }
+  }
+}\end{lstlisting}
 
 		\end{column}
 	\end{columns}
@@ -1515,10 +1682,34 @@ System.in.println("Hello, World!");
 
 \subsection{Logical operation --- when shall it be executed}
 \begin{frame}[fragile]
+	\frametitle{If statement is true, then?}
+
+	%% Contents:
+	%
+	% If ... else ... 语句分为两个部分
+	% 第一个部分就是if(statement) then部分
+	%
+	% 大家可以看到, 我们这个语句有个statement部分
+	% 这里要写入的就是我们的命题, 如果命题可以成立, 也就是说,
+	% 逻辑运算的结果为true, 就会执行then-part
+	%
+	% 当然, statement部分如果是boolean类型的变量也是可以的
+	% 毕竟, 这里实际上检查的只是值是否为true嘛~
+	% UwU
+	%
 
 	\begin{columns}[c]
 		\begin{column}{0.9\textwidth}
 
+			\begin{lstlisting}[style=Java]
+if(<statement>){
+    <then-part>*
+}\end{lstlisting}
+
+			\begin{lstlisting}[style=Java]
+if(true){
+  System.out.println("statement is true");
+}\end{lstlisting}
 
 		\end{column}
 	\end{columns}
@@ -1527,19 +1718,37 @@ System.in.println("Hello, World!");
 
 \subsection{Logical operation --- and what else if the condition is not true}
 \begin{frame}[fragile]
+	\frametitle{What else shall it do if statement is wrong?}
+
+	%% Contents:
+	%
+	% 另一个部分就是else部分了
+	% 如果statement得到了一个false值怎么办呢?
+	% 如果没有else部分, 程序就会忽略
+	% 而有了else部分, 程序就会去尝试执行这个else部分
+	% else是和if相关联的, 没有if就没有else语句
+	%
 
 	\begin{columns}[c]
 		\begin{column}{0.9\textwidth}
 
+			\begin{lstlisting}[style=Java]
+if(...){
+    ...
+} else {
+    <else-part>*
+}\end{lstlisting}
 
 		\end{column}
 	\end{columns}
 
 \end{frame}
 
+% -----------------------------------------------------------------------------------------
 
 \section{while --- how to execute some sentences once or more}
 \begin{frame}[fragile]
+	\frametitle{When we need to execute something repeatedly\dots}
 
 	\begin{columns}[c]
 		\begin{column}{0.9\textwidth}
@@ -1552,6 +1761,7 @@ System.in.println("Hello, World!");
 
 \subsection{Loop --- while condition do something}
 \begin{frame}[fragile]
+	\frametitle{Loop, loop, loop, nested loop}
 
 	\begin{columns}[c]
 		\begin{column}{0.9\textwidth}
@@ -1564,6 +1774,8 @@ System.in.println("Hello, World!");
 
 \subsubsection{Loop --- do something and check wether to continue}
 \begin{frame}[fragile]
+	\frametitle{Loop Rounds}
+	\framesubtitle{Important to remember that code are executed linearly}
 
 	\begin{columns}[c]
 		\begin{column}{0.9\textwidth}
@@ -1576,6 +1788,7 @@ System.in.println("Hello, World!");
 
 \subsubsection{Break --- Jump out of the loop}
 \begin{frame}[fragile]
+	\frametitle{Jump, out of the loop!}
 
 	\begin{columns}[c]
 		\begin{column}{0.9\textwidth}
@@ -1588,6 +1801,7 @@ System.in.println("Hello, World!");
 
 \subsubsection{Continue --- Next circle}
 \begin{frame}[fragile]
+	\frametitle{Next circle, next round, but the same loop}
 
 	\begin{columns}[c]
 		\begin{column}{0.9\textwidth}
@@ -1598,28 +1812,11 @@ System.in.println("Hello, World!");
 
 \end{frame}
 
+% ----------------------------------------------------------------------
 
+\QApage
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-%------------------------------------------------
+% ----------------------------------------------------------------------
 
 \section{Referencing}
 
@@ -1630,24 +1827,7 @@ System.in.println("Hello, World!");
 
 \end{frame}
 
-%------------------------------------------------
-
-\begin{frame} % Use [allowframebreaks] to allow automatic splitting across slides if the content is too long
-	\frametitle{References}
-
-	\begin{thebibliography}{99} % Beamer does not support BibTeX so references must be inserted manually as below, you may need to use multiple columns and/or reduce the font size further if you have many references
-		\footnotesize % Reduce the font size in the bibliography
-
-		%\bibitem[Kennedy, 2023]{p2}
-		%Annabelle Kennedy (2023)
-		%\newblock Publication title
-		%\newblock \emph{Journal Name} 12(3), 45 -- 678.
-	\end{thebibliography}
-\end{frame}
-
-%----------------------------------------------------------------------------------------
-%  ACKNOWLEDGMENTS SLIDE
-%----------------------------------------------------------------------------------------
+% ----------------------------------------------------------------------
 
 \begin{frame}
 	\frametitle{Acknowledgements}
@@ -1659,21 +1839,5 @@ System.in.println("Hello, World!");
 		\end{column}
 	\end{columns}
 \end{frame}
-
-%----------------------------------------------------------------------------------------
-%  CLOSING SLIDE
-%----------------------------------------------------------------------------------------
-
-\begin{frame}[plain] % The optional argument 'plain' hides the headline and footline
-	\begin{center}
-		{\Huge The End}
-
-		\bigskip\bigskip % Vertical whitespace
-
-		{\LARGE Questions? Comments?}
-	\end{center}
-\end{frame}
-
-%----------------------------------------------------------------------------------------
 
 \end{document}
