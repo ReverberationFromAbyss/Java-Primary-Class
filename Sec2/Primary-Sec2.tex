@@ -134,12 +134,14 @@
 
 			Variables are something we manipulate in Java often.\\
 
-			As we mentioned last class, variable can store values, do algebra operations and draw value stored inside them for use then.
+			As we mentioned last class, variable can store values, do arithmetic operations and draw value stored inside them for use then.
 
 			\begin{columns}[c]
 				\begin{column}{0.4\textwidth}
 
-					literal (or immediate, in assembly)
+					{\footnotesize
+						literal (or immediate, in assembly)
+					}
 
 					\begin{lstlisting}
 2147483647
@@ -152,7 +154,9 @@
 
 				\begin{column}{0.4\textwidth}
 
-					variable(Definition, in Java)
+					{\footnotesize
+						variable(Definition, in Java)
+					}
 
 					\begin{lstlisting}
 int foo = 2147483647;
@@ -318,7 +322,7 @@ int foo;      // define a variable called foo
 int bar = 10; // define a variable, whose initial value is 10 and called bar
 // Above we define each variable in a single line
 double a,b;   // define two variable, one is a, and the other is b
-double read = 1.0, pi = 3.14;
+double real = 1.0, pi = 3.14;
 double alpha = 1.0, beta = 3.6, theta = 9.9;\end{lstlisting}
 
 		\end{column}
@@ -356,7 +360,7 @@ double alpha = 1.0, beta = 3.6, theta = 9.9;\end{lstlisting}
 	%
 	% 在计算机中, 有关于数据的差异更大, 相对应的也有各种不同的限制
 	% 如 int只能表示从-2147483648~2147483647之间的数
-	% 而 Byte甚至只能表示-1024~1023之间的数
+	% 而 Byte甚至只能表示-128 ~ 127之间的数
 	%
 	% 下表展示了我们将学习的Java中的一些基本数据类型
 	% 首先是老熟人String, 如果只说英文名不太习惯的话,
@@ -596,13 +600,13 @@ System.out.println(foo.indexOf("World"));\end{lstlisting}
 			\begin{table}
 				\begin{tabular}{l l l}
 					%\toprule
-					Type  & Wrapper & Range                                                   \\
+					Type  & Wrapper & Range                                                      \\
 					%\midrule
-					byte  & Byte    & $ -2^{7} ~ 2^{7} - 1 $ (-128 \dots 127)                 \\
-					short & Short   & $ -2^{15} ~ 2^{15} - 1 $ (-32768 \dots 32767)           \\
-					int   & Integer & $ -2^{31} ~ 2^{31} - 1 $ (-2147483648 \dots 2147483647) \\
-					long  & Long    & $ -2^{63} ~ 2^{63} - 1 $ (-9,223,372,036,854,775,808    \\
-					      &         & \dots 9,223,372,036,854,775,807)                        \\
+					byte  & Byte    & $ -2^{7} \sim 2^{7} - 1 $ (-128 \dots 127)                 \\
+					short & Short   & $ -2^{15} \sim 2^{15} - 1 $ (-32768 \dots 32767)           \\
+					int   & Integer & $ -2^{31} \sim 2^{31} - 1 $ (-2147483648 \dots 2147483647) \\
+					long  & Long    & $ -2^{63} \sim 2^{63} - 1 $ (-9,223,372,036,854,775,808    \\
+					      &         & \dots 9,223,372,036,854,775,807)                           \\
 					%\bottomrule
 				\end{tabular}
 			\end{table}
@@ -615,8 +619,15 @@ System.out.println(bar.equals(foo));
 // we should use equals to compare Integers and other wrapper
 System.out.println(bar.compareTo(30));\end{lstlisting}
 
+			\tiny {
+				Wrappers is are class, and it is better not to manipulate it by operations primary data uses.
+
+				Though it is able to write code like ``bar + foo'',
+				it may cause some unexpected situation, for example, lack of accuracy.
+			}
 		\end{column}
 	\end{columns}
+
 
 \end{frame}
 
@@ -665,6 +676,11 @@ System.out.println("Wrapper: java.lang.Double");
 System.out.println("Min value: Double.MIN_VALUE = " + Double.MIN_VALUE);
 System.out.println("Max value: Double.MAX_VALUE = " + Double.MAX_VALUE);
 System.out.println(); \end{lstlisting}
+
+			\tiny {
+				Integer and other wrapper for intergers has similar properties, as well.
+				For example, Byte.MIN\_VALUE.
+			}
 
 		\end{column}
 	\end{columns}
@@ -747,14 +763,22 @@ System.out.println("Value of bar is: " + bar);\end{lstlisting}
 		\begin{column}{0.9\textwidth}
 
 			\begin{lstlisting}[style=Java]
-BigInteger foo = BigInteger("24");
-System.out.println(foo.add(BitInteger.ONE));
-System.out.println(foo.compareTo(BigInteger.TWO));
-System.out.println(foo.mutiply(BigInteger.TWO));
-System.out.println(foo.devide(BigInteger.TWO));
-System.out.println(foo.mod(BigInteger("9")));
-System.out.println(foo.pow(BigInteger.TWO));
-System.out.println(foo);\end{lstlisting}
+import java.math.BigInteger;
+// import java.math.BigDecimal;
+
+public class BigNumbersDemo {
+  public static void main(String[] args) {
+    BigInteger foo = new BigInteger("24");
+    System.out.println(foo.add(BigInteger.ONE));
+    System.out.println(foo.compareTo(BigInteger.TWO));
+    System.out.println(foo.multiply(BigInteger.TWO));
+    System.out.println(foo.divide(BigInteger.TWO));
+    System.out.println(foo.mod(new BigInteger("9")));
+    System.out.println(foo.pow(2));
+    System.out.println(foo);
+  } // ! main
+}\end{lstlisting}
+
 
 		\end{column}
 	\end{columns}
@@ -827,6 +851,13 @@ System.out.println(foo);\end{lstlisting}
 				\end{tabular}
 			\end{table}
 
+			Notice: All relations in Java can be seen as statements.
+
+			\bigskip %
+
+			Eg. p: 1 equals to 1\\
+			which is true
+
 			\begin{lstlisting}[style=Java]
 System.out.println(1==1);\end{lstlisting}
 
@@ -851,10 +882,12 @@ System.out.println(1==1);\end{lstlisting}
 	% 我们有所谓的逻辑运算来操作逻辑值
 	% 比如说, 大家再看ppt
 	% 这里就用到了 "与" 运算,
-	% 来表示 1 < var < 80这样一个概念
+	% 来表示 1 < var < 80 这样一个概念
 
 	\begin{columns}[c]
 		\begin{column}{0.9\textwidth}
+
+			Boolean has wrapper class as well.
 
 			\begin{lstlisting}[style=Java]
 boolean foo = true;
@@ -1129,7 +1162,7 @@ public class Logical {
 		\begin{column}{0.9\textwidth}
 
 			\[
-				V = (-1)^{S} * M * 2^E
+				V = (-1)^s * (1.M)_{2} * 2^E
 			\]
 
 			\begin{table}
@@ -1138,6 +1171,9 @@ public class Logical {
 					Sign   & exponent & fraction                \\
 					%\midrule
 					0      & 01111100 & 01000000000000000000000 \\
+					%% 0,
+					%% +124 - 127
+					%% 1.01000000000000000000000
 					1 bits & 8 bits   & 23 bits                 \\
 					%\bottomrule
 				\end{tabular}
@@ -1270,13 +1306,11 @@ System.out.println(var); // => 63\end{lstlisting}
 	\begin{columns}[c]
 		\begin{column}{0.9\textwidth}
 
-			{\center
-				{
-					Low  ------------------------------------> High
+			\begin{center}
+				Low  ------------------------------------> High\\
 
-					byte,short,char —> int —> long —> float —> double
-				}
-			}
+				byte,short,char —> int —> long —> float —> double
+			\end{center}
 
 			\bigskip %
 
@@ -1449,7 +1483,7 @@ System.in.println("Hello, World!");
 			\begin{lstlisting}[style=Java]
 import java.io.*;
 
-pulic class Read {
+pulic class SystemIO {
   public static void main(String[] args) throws IOException {
     byte[] c = new byte[1];
     System.in.read(c);
@@ -1491,7 +1525,7 @@ public class IOStream{
     // This will not truncate the line
     System.out.println("World!");
     // But this one will
-    System.out.printf("Format out put a intget: \%d $\backslash$n", 21);
+    System.out.printf("Format out put a intget: \%d \n", 21);
     // And this one can control how should a data be printed
   }
 }\end{lstlisting}
