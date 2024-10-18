@@ -1,0 +1,626 @@
+\documentclass[en, 11pt, xcolor=dvipsnames]{beamer}
+\usepackage[en]{infocoBeamer}
+
+\definecolor{hrefcol}{RGB}{0, 0, 255} % Example: blue color
+
+% -------------------------------------------------------------------------------------
+\usepackage{tikz}
+\usetikzlibrary{shapes.callouts, shadows, calc}
+\usepackage{listings}
+
+%\usepackage{fontspec-xetex}
+
+\tikzset{note/.style={rectangle collout, rounded corners,fill=grap!20, drop shadow, font=\footnotesize}}
+
+\newcommand{\tikzmark}[1]{\tikz[overlay,remember picture] \node (#1) {};}    
+
+\newcounter{image}
+\setcounter{image}{1}
+
+\makeatletter
+\newenvironment{btHighlight}[1][]
+{\begingroup\tikzset{bt@Highlight@par/.style={#1}}\begin{lrbox}{\@tempboxa}}
+{\end{lrbox}\bt@HL@box[bt@Highlight@par]{\@tempboxa}\endgroup}
+
+\newcommand\btHL[1][]{%
+  \begin{btHighlight}[#1]\bgroup\aftergroup\bt@HL@endenv%
+}
+\def\bt@HL@endenv{%
+  \end{btHighlight}%   
+  \egroup
+}
+
+\newcommand{\bt@HL@box}[2][]{%
+  \tikz[#1]{%
+    \pgfpathrectangle{\pgfpoint{0pt}{0pt}}{\pgfpoint{\wd #2}{\ht #2}}%
+    \pgfusepath{use as bounding box}%
+    \node[anchor=base west,rounded corners, fill=green!30,outer sep=0pt,inner xsep=0.2em, inner ysep=0.1em,  #1](a\theimage){\usebox{#2}};
+  }%
+   %\tikzmark{a\theimage} <= can be used, but it leads to a spacing problem
+   % the best approach is to name the previous node with (a\theimage)
+ \stepcounter{image}
+}
+\makeatother
+
+%\setmainfont{FiraCode Nerd Font Mono}
+%\setsansfont{FiraCode Nerd Font Mono}
+%\setmonofont{FiraCode Nerd Font Mono}
+
+%\setCJKmainfont[BoldFont = STLibian-SC-Regular,]{TpldKhangXiDictTrial}
+%\setCJKsansfont{DFWaWaSC-W5}
+%\setCJKmonofont{STXingkai-SC-Light}
+%\setCJKfamilyfont{qingsong}{FZQKBYSJW--GB1-0}
+%\lstset{language=Java,
+%        basicstyle=\footnotesize\ttfamily,
+%        keywordstyle=\footnotesize\color{blue}\ttfamily,
+%        moredelim=**[is][\bthl]{`}{`},
+%}
+
+\lstset{
+  basicstyle            =   \scriptsize\ttfamily,          % 基本代码风格
+    keywordstyle        =   \bfseries,          % 关键字风格
+    commentstyle        =   \scriptsize\tt\itshape,  % 注释的风格，斜体
+    stringstyle         =   \tt\itshape,  % 字符串风格
+    flexiblecolumns,                % 别问为什么，加上这个
+    numbers             =   left,   % 行号的位置在左边
+    showspaces          =   false,  % 是否显示空格，显示了有点乱，所以不现实了
+    numberstyle         =   \ttfamily,    % 行号的样式，小五号，tt等宽字体
+    showstringspaces    =   false,
+    captionpos          =   t,      % 这段代码的名字所呈现的位置，t指的是top上面
+    frame               =   lrtb,   % 显示边框
+}
+
+\lstdefinestyle{Java}{
+    language        =   Java,
+    commentstyle    =   \scriptsize\color{red}\ttfamily,
+    basicstyle      =   \scriptsize\ttfamily,
+    keywordstyle    =   \scriptsize\color{blue}\bfseries,
+    keywordstyle    =   [2] \color{teal},
+    stringstyle     =   \scriptsize\color{magenta}\tt,
+    numberstyle     =   \tiny\ttfamily,
+    showstringspaces=   false,
+    flexiblecolumns,                % 别问为什么，加上这个
+    breaklines      =   true,   % 自动换行，建议不要写太长的行
+    columns         =   fixed,  % 如果不加这一句，字间距就不固定，很丑，必须加
+    basewidth       =   0.15cm,
+		moredelim       =   **[is][\btHL]{`}{`},
+    captionpos      =   t,      % 这段代码的名字所呈现的位置，t指的是top上面
+    frame           =   lrtb,   % 显示边框
+}
+% -------------------------------------------------------------
+
+% meta-data
+\title{Java Programming Language \\ Simple Guide} % The short title in the optional parameter appears at the bottom of every slide, the full title in the main parameter is only on the title page
+\subtitle{Infoco Programming Classes} % Presentation subtitle, remove this command if a subtitle isn't required
+\author{Ug. Sihang Sha \and Pg. Muxi Qiao} % Presenter name(s), the optional parameter can contain a shortened version to appear on the bottom of every slide, while the main parameter will appear on the title slide
+\institute{Xiann' Jiaotong Livepool University \\ \smallskip \textit{infoco@xjtlu.edu.cn}} % Your institution, the optional parameter can be used for the institution shorthand and will appear on the bottom of every slide after author names, while the required parameter is used on the title slide and can include your email address or additional information on separate lines
+\date{\today} % Presentation date or conference/meeting name, the optional parameter can contain a shortened version to appear on the bottom of every slide, while the required parameter value is output to the title slide
+
+%-------------------------------------------------------------------------------------------------------
+
+% document body
+% ------------------------------------------------------------------------------------------------------
+\begin{document}
+
+\maketitle
+
+% ------------------------------------------------------------------------------------------------------
+
+%------------------------------------------------
+\section{Branch sentences --- Different condition, different response}
+
+\subsection{Nested If}
+\begin{frame}[fragile]
+	\frametitle{And Nested if}
+
+	\begin{columns}[c]
+		\begin{column}{0.98\textwidth}
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+\subsection{If \dots else \dots --- no, its to long}
+\begin{frame}
+	\frametitle{Continuous if \dots else \dots}
+
+	\begin{columns}[c]
+		\begin{column}{0.98\textwidth}
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+\subsubsection{Break --- Stop! Don't go forward!}
+\begin{frame}
+	\frametitle{Break the case}
+
+	\begin{columns}[c]
+		\begin{column}{0.98\textwidth}
+			something
+
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\section{Variable scope}
+\begin{frame}
+	\frametitle{Variable scope}
+
+	\begin{columns}[c]
+		\begin{column}{0.98\textwidth}
+			something
+
+		\end{column}
+	\end{columns}
+\end{frame}
+
+
+% -----------------------------------------------
+\section{Loop --- When we want to execute something repeatedly.}
+\begin{frame}
+	\frametitle{Loop --- When we want to execute something repeatly.}
+
+	\begin{columns}[c]
+		\begin{column}{0.98\textwidth}
+			something
+
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\subsection{While --- while condition do something}
+\begin{frame}[fragile]
+	\frametitle{while loop}
+
+	\begin{columns}[c]
+		\begin{column}{0.9\textwidth}
+			something
+
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+\subsubsection{Vectors --- Actually, Array}
+\begin{frame}[fragile]
+
+	\begin{columns}[c]
+		\begin{column}{0.98\textwidth}
+			something
+
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+\subsubsection{Loop --- do something and check wether to continue}
+\begin{frame}[fragile]
+	\frametitle{Do \dots While \& Loop Rounds}
+	\framesubtitle{Important to remember that code are executed linearly}
+
+	\begin{columns}[c]
+		\begin{column}{0.9\textwidth}
+
+			something
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+\subsubsection{Break --- Jump out of the loop}
+\begin{frame}[fragile]
+	\frametitle{Jump, out of the loop!}
+
+	\begin{columns}[c]
+		\begin{column}{0.9\textwidth}
+			something
+
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+\subsubsection{Continue --- Next circle}
+\begin{frame}[fragile]
+	\frametitle{Next circle, next round, but the same loop}
+
+	\begin{columns}[c]
+		\begin{column}{0.9\textwidth}
+			something
+
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+\subsection{For --- Another loop}
+\begin{frame}[fragile]
+	\frametitle{For something, and do something}
+	\framesubtitle{Another way to visit all elements in an array}
+
+	\begin{columns}[c]
+		\begin{column}{0.9\textwidth}
+			something
+
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+\subsection{Foreach expression --- For something in something}
+\begin{frame}[fragile]
+	\frametitle{For something in something, and thus we do something}
+
+	\begin{columns}[c]
+		\begin{column}{0.9\textwidth}
+			something
+
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+\subsection{Switch \dots case \dots}
+\begin{frame}
+	\frametitle{Continuous if\dots}
+
+	\begin{columns}
+		\begin{column}{0.98\textwidth}
+			something
+
+		\end{column}
+	\end{columns}
+\end{frame}
+% ----------------------------------------------------------------------------------------
+
+\section{Functions \& Methods}
+\subsection{Functions}
+\begin{frame}[fragile]
+	\frametitle{Functions, actually is a kind of Abstraction}
+
+	%% Contents:
+	% 
+	% Just as what we said before
+	% the mathmathic meaning function has different expression in Java
+	%
+	% So, why don't we just written directly in the Program ?
+	%
+	% Here is a sample program that defined and used a funciton
+	%
+	% we can see that,
+	% the function foo, do output hello and something others
+	%
+	% but when we call it, it just run, and we do not need to know how it is implemented
+	% that we called balck box abstraction.
+	%
+	% Functions, apply arguments, evaluate, produce values, and finally return the result
+	% all we need know is what arguments it need,
+	% and what output it generate
+	% we do not need to know, how it mantipulate the arguments, wether it call any other functions
+	% like a black box,
+	% (draw in white board)
+	%
+	% Actually, just as what we already know in the math
+	% functions in Java, accept some parameters, and then process then,
+	% return a value, however, sometimes, it can also do something like example
+	% here, the function just print something onto the screen
+	% and do not return a value
+	%
+	% this is another difference between Java and math
+
+	\begin{columns}[c]
+		\begin{column}{0.98\textwidth}
+
+			\begin{lstlisting}[style=Java]
+public class Sample {
+  public static void main(String[] args) {
+    foo("World");
+  }
+
+  private static void foo(String name) {
+    System.out.println("hello, " + name);
+  }
+}
+\end{lstlisting}
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+\subsubsection{Access modifier --- A way to control accessblity}
+\begin{frame}[fragile]
+	\frametitle{Access modifier --- A way to control accessblity}
+
+	%% Contents:
+	%
+	% So we need to let us kown what,
+	% Java is a oop language, which, oop means object obtain Programming
+	% so, what is its meaning?
+	%
+	% That means, everything we mantipulated in java is object
+	% every data is orgnaized by class
+	% and every data is presented by object
+	%
+	% objects, in Java, is just like thing in our real life
+	% while class, describe the common attrubtion they have
+	% like World, Phylum Class Order Family Genus Species in Biology
+	% each entry in Species define a common attrubtion of a creature
+	%
+	% so, as creatures have their private organ,
+	% objects in Java also have those accessblity difference
+	% so we need access-modifier to tell the program what
+	% can be seen by others
+	%
+	% however, as we haven't fully introduce class yet
+	% we won't talk about this specially
+	% 
+	% when we need to write a program now
+	% use public is OK
+	%
+	%
+
+	\begin{columns}[c]
+		\begin{column}{0.9\textwidth}
+
+			\begin{table}
+				\begin{center}
+					\begin{tabular}[c]{l l l}
+						Access Modifier & keyword   & Meaning                                                         \\ \\
+						public          & public    & can be visited everywhere                                       \\
+						private         & private   & can be visited only by same class                               \\
+						protected       & protected & can be visited only by objects in the same package, or subclass \\
+						default         &           & only objects in the same package can visit                      \\
+					\end{tabular}
+				\end{center}
+			\end{table}
+
+			\begin{lstlisting}[style=Java]
+public static int foo(String name) {
+  System.out.println("hello, " + name);
+}
+      \end{lstlisting}
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+\subsubsection{Static Methods --- Functions can be called with Class Name directly}
+\begin{frame}[fragile]
+	\frametitle{Static Methods --- Functions can be called with Class Name directly}
+
+	%% Contents:
+
+	% Static means static
+	%
+	% so, what is "static" function?
+	%
+	% put it simply
+	% is some functions that can be called directly.
+	% Without create an object
+	%
+	% compare to objects we meet before
+	% for example, String str = "";
+	% we mentioned that it is a object right?
+	% and we can call some methods with the object
+	% those methods, in contrust, are "dynamic" methods
+	%
+	% We cannot use those methods directly in our program
+	%
+	% But we also met some other functions
+	% like, Integer.praseInt()
+	%
+	% As we menthioned before, Integer is a class, wrapper class
+	% class is used to define a object, but why can we use it in function call?
+	% that's is one example of our static function
+	%
+	%
+	% So, as we mention the term class for such many times
+	% what class contains?
+	%
+	% At last class, we say that class is a way to orgnaize data
+	% but how do it orgnaize them?
+	% in Java, a class has two part
+	% one is proerties, they are variables, store all information
+	% we think is associated with the target we want to describe
+	% another is methods, they are something we are talking now
+	% methods is what the target can do
+	% just like cats can meow, dogs can bark, cars can be drive,
+	% people can think
+	% 
+	% But only have orgnaize method of data is not enough
+	% we need something further
+	% something actually store the data
+	%
+	% that is why we need object,
+	% objects are instance of the specified data
+	%
+	% Then, we can talk about the difference between function and method now
+	% function, is something accept parameters to produce a result
+	% method, is what a specified object can do,
+	% produce a result based on both parameter and the object itself
+
+	\begin{columns}[c]
+		\begin{column}{0.98\textwidth}
+
+			\begin{lstlisting}[style=Java]
+public class Sample {
+  public static void main(String[] args) {
+    String str = "str";
+    System.out.println(str.concat("This is a method call"));
+    // Method is kind of function, which is associated with an object
+    Integer.praseInt("1234");
+    // While here is static function call
+    foo("World");
+    // We define a function, and we call it
+  }
+
+  // Our "static" function
+  private `static` int foo(String name) {
+    System.out.println("hello, " + name);
+  }
+}
+\end{lstlisting}
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+\subsubsection{Define a static function}
+\begin{frame}[fragile]
+	\frametitle{Define a static function}
+
+	%% Contents:
+
+	% Here is how we declare a function
+	% the upper one is the from
+	% to complex?
+	% don't worry
+	%
+	% like how we describe the variables
+	% we provide example as well
+	%
+	% The function down here is a simplest one
+	% which has only one sentence
+	%
+	% we can see that
+	% access-modifier here is private
+	% static means it is a static function
+	% return-type is void
+
+	\begin{columns}[c]
+		\begin{column}{0.9\textwidth}
+
+			\begin{lstlisting}[style=Java]
+<access-modifier> [static] <return-type> <function-name>(<parameter-list>*) {
+    [<sentences>;]*
+    [return <return-value>;]*
+}
+\end{lstlisting}
+
+			\begin{lstlisting}[style=Java]
+private static void foo(String name) {
+  System.out.println("hello, " + name);
+}
+\end{lstlisting}
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+\subsubsection{return --- Exit the function}
+\begin{frame}[fragile]
+	\frametitle{Return --- Exit the function}
+	\framesubtitle{And return a value}
+
+	%% Contents:
+
+	% Here we have another example
+	% add
+	% the function here, compared with last one
+	% have something different
+	%
+	% we have a return sentence
+	% which means, we can return a value here
+	%
+	% return do two things
+	% first, return a value
+	% second, end the function
+	%
+	% every time the program meet the return sentence
+	% it jump out the function
+	%
+	% Also, the return sentence can be not only one
+	% but we encourage you to write only one return
+	% in your program
+
+	\begin{columns}[c]
+		\begin{column}{0.9\textwidth}
+
+			\begin{lstlisting}[style=Java]
+private static int add(int a, int b) {
+    return a + b;
+}
+\end{lstlisting}
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+\subsubsection{Main Function --- Where the Program Starts}
+\begin{frame}[fragile]
+	\frametitle{Main Function --- Where the Program Starts}
+	\framesubtitle{A special convention}
+
+	\begin{columns}[c]
+		\begin{column}{0.9\textwidth}
+
+			\begin{lstlisting}[style=Java]
+public class Sample {
+  `public static void main(String[] args)` {
+    foo("World");
+  }
+
+  private static int foo(String name) {
+    System.out.println("hello, " + name);
+  }
+}
+\end{lstlisting}
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+% ---------------------------------------------------
+
+\section{Stack and Heap}
+\begin{frame}
+
+\end{frame}
+% ----------------------------------------------------------------------
+
+
+\QApage
+
+% ----------------------------------------------------------------------
+
+\section{Referencing}
+
+\begin{frame}
+	\frametitle{Citing References}
+
+	\bigskip % Vertical whitespace
+
+\end{frame}
+
+% --------------------
+
+
+% ----------------------------------------------------------------------
+
+\begin{frame}
+	\frametitle{Acknowledgements}
+
+	\begin{columns}[t] % The "c" option specifies centered vertical alignment while the "t" option is used for top vertical alignment
+		\begin{column}{0.45\textwidth} % Left column width
+		\end{column}
+		\begin{column}{0.5\textwidth} % Right column width
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\end{document}
