@@ -1,0 +1,263 @@
+\documentclass[en, 11pt, xcolor=dvipsnames]{beamer}
+\usepackage[en]{infocoBeamer}
+
+\definecolor{hrefcol}{RGB}{0, 0, 255} % Example: blue color
+
+% -------------------------------------------------------------------------------------
+\usepackage{tikz}
+\usetikzlibrary{shapes.callouts, shadows, calc}
+\usepackage{listings}
+
+%\usepackage{fontspec-xetex}
+
+\tikzset{note/.style={rectangle collout, rounded corners,fill=grap!20, drop shadow, font=\footnotesize}}
+
+\newcommand{\tikzmark}[1]{\tikz[overlay,remember picture] \node (#1) {};}    
+
+\newcounter{image}
+\setcounter{image}{1}
+
+\makeatletter
+\newenvironment{btHighlight}[1][]
+{\begingroup\tikzset{bt@Highlight@par/.style={#1}}\begin{lrbox}{\@tempboxa}}
+{\end{lrbox}\bt@HL@box[bt@Highlight@par]{\@tempboxa}\endgroup}
+
+\newcommand\btHL[1][]{%
+  \begin{btHighlight}[#1]\bgroup\aftergroup\bt@HL@endenv%
+}
+\def\bt@HL@endenv{%
+  \end{btHighlight}%   
+  \egroup
+}
+
+\newcommand{\bt@HL@box}[2][]{%
+  \tikz[#1]{%
+    \pgfpathrectangle{\pgfpoint{0pt}{0pt}}{\pgfpoint{\wd #2}{\ht #2}}%
+    \pgfusepath{use as bounding box}%
+    \node[anchor=base west,rounded corners, fill=green!30,outer sep=0pt,inner xsep=0.2em, inner ysep=0.1em,  #1](a\theimage){\usebox{#2}};
+  }%
+   %\tikzmark{a\theimage} <= can be used, but it leads to a spacing problem
+   % the best approach is to name the previous node with (a\theimage)
+ \stepcounter{image}
+}
+\makeatother
+
+%\setmainfont{FiraCode Nerd Font Mono}
+%\setsansfont{FiraCode Nerd Font Mono}
+%\setmonofont{FiraCode Nerd Font Mono}
+
+%\setCJKmainfont[BoldFont = STLibian-SC-Regular,]{TpldKhangXiDictTrial}
+%\setCJKsansfont{DFWaWaSC-W5}
+%\setCJKmonofont{STXingkai-SC-Light}
+%\setCJKfamilyfont{qingsong}{FZQKBYSJW--GB1-0}
+%\lstset{language=Java,
+%        basicstyle=\footnotesize\ttfamily,
+%        keywordstyle=\footnotesize\color{blue}\ttfamily,
+%        moredelim=**[is][\bthl]{`}{`},
+%}
+
+\lstset{
+  basicstyle            =   \scriptsize\ttfamily,          % 基本代码风格
+    keywordstyle        =   \bfseries,          % 关键字风格
+    commentstyle        =   \scriptsize\tt\itshape,  % 注释的风格，斜体
+    stringstyle         =   \tt\itshape,  % 字符串风格
+    flexiblecolumns,                % 别问为什么，加上这个
+    numbers             =   left,   % 行号的位置在左边
+    showspaces          =   false,  % 是否显示空格，显示了有点乱，所以不现实了
+    numberstyle         =   \ttfamily,    % 行号的样式，小五号，tt等宽字体
+    showstringspaces    =   false,
+    captionpos          =   t,      % 这段代码的名字所呈现的位置，t指的是top上面
+    frame               =   lrtb,   % 显示边框
+}
+
+\lstdefinestyle{Java}{
+    language        =   Java,
+    commentstyle    =   \scriptsize\color{red}\ttfamily,
+    basicstyle      =   \scriptsize\ttfamily,
+    keywordstyle    =   \scriptsize\color{blue}\bfseries,
+    keywordstyle    =   [2] \color{teal},
+    stringstyle     =   \scriptsize\color{magenta}\tt,
+    numberstyle     =   \tiny\ttfamily,
+    showstringspaces=   false,
+    flexiblecolumns,                % 别问为什么，加上这个
+    breaklines      =   true,   % 自动换行，建议不要写太长的行
+    columns         =   fixed,  % 如果不加这一句，字间距就不固定，很丑，必须加
+    basewidth       =   0.15cm,
+		moredelim       =   **[is][\btHL]{`}{`},
+    captionpos      =   t,      % 这段代码的名字所呈现的位置，t指的是top上面
+    frame           =   lrtb,   % 显示边框
+}
+% -------------------------------------------------------------
+
+% meta-data
+\title{Java Programming Language \\ Simple Guide} % The short title in the optional parameter appears at the bottom of every slide, the full title in the main parameter is only on the title page
+\subtitle{Infoco Programming Classes} % Presentation subtitle, remove this command if a subtitle isn't required
+\author{Ug. Sihang Sha \and Pg. Muxi Qiao} % Presenter name(s), the optional parameter can contain a shortened version to appear on the bottom of every slide, while the main parameter will appear on the title slide
+\institute{Xiann' Jiaotong Livepool University \\ \smallskip \textit{infoco@xjtlu.edu.cn}} % Your institution, the optional parameter can be used for the institution shorthand and will appear on the bottom of every slide after author names, while the required parameter is used on the title slide and can include your email address or additional information on separate lines
+\date{\today} % Presentation date or conference/meeting name, the optional parameter can contain a shortened version to appear on the bottom of every slide, while the required parameter value is output to the title slide
+
+%-------------------------------------------------------------------------------------------------------
+
+% document body
+% ------------------------------------------------------------------------------------------------------
+\begin{document}
+
+\maketitle
+
+% ------------------------------------------------------------------------------------------------------
+
+%------------------------------------------------
+\section{Sort}
+
+\subsection{Bubble Sort}
+\begin{frame}[fragile]
+	\frametitle{Bubble Sort}
+
+
+	\begin{columns}[c]
+		\begin{column}{0.98\textwidth}
+
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+\subsection{Shell Sort}
+\begin{frame}[fragile]
+	\frametitle{Shell Sort}
+
+	%% Contents:
+
+
+	\begin{columns}[c]
+		\begin{column}{0.98\textwidth}
+
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+\subsection{Quick Sort}
+\begin{frame}[fragile]
+	\frametitle{Quick Sort}
+
+	%% Contents:
+
+
+	\begin{columns}[c]
+		\begin{column}{0.98\textwidth}
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+\subsection{Merge Sort}
+\begin{frame}[fragile]
+	\frametitle{Merge Sort}
+
+	%% Contents:
+
+
+	\begin{columns}[c]
+		\begin{column}{0.98\textwidth}
+
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\subsection{Bucket Sort}
+\begin{frame}[fragile]
+	\frametitle{Bucket Sort}
+
+	%% Contents:
+
+
+
+	\begin{columns}[c]
+		\begin{column}{0.98\textwidth}
+
+		\end{column}
+	\end{columns}
+\end{frame}
+
+% -----------------------------------------------
+
+\section{Read A Number}
+\subsection{Integer only}
+\begin{frame}[fragile]
+	\frametitle{Parse A Integer}
+
+	%% Contents
+
+	\begin{columns}[c]
+		\begin{column}{0.98\textwidth}
+
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\subsection{Real Numbers}
+\begin{frame}[fragile]
+	\frametitle{How About Reals?}
+
+	%% Contents:
+
+
+	\begin{columns}[c]
+		\begin{column}{0.98\textwidth}
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
+
+% -------------------------------------------------
+
+\section{Game Of Life}
+\begin{frame}[fragile]
+	\frametitle{Game Of Life --- Your First Project}
+
+	%% Contents:
+
+	\begin{columns}[c]
+		\begin{column}{0.98\textwidth}
+
+
+
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\QApage
+
+% ----------------------------------------------------------------------
+
+\section{Referencing}
+
+\begin{frame}
+	\frametitle{Citing References}
+
+	\bigskip % Vertical whitespace
+
+\end{frame}
+
+% --------------------
+
+
+% ----------------------------------------------------------------------
+
+\begin{frame}
+	\frametitle{Acknowledgements}
+
+	\begin{columns}[t] % The "c" option specifies centered vertical alignment while the "t" option is used for top vertical alignment
+		\begin{column}{0.45\textwidth} % Left column width
+		\end{column}
+		\begin{column}{0.5\textwidth} % Right column width
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\end{document}
