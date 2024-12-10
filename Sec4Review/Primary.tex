@@ -17,6 +17,8 @@
 \newcounter{image}
 \setcounter{image}{1}
 
+\usepackage{ctex}
+
 \makeatletter
 \newenvironment{btHighlight}[1][]
 {\begingroup\tikzset{bt@Highlight@par/.style={#1}}\begin{lrbox}{\@tempboxa}}
@@ -108,6 +110,27 @@
 
 %------------------------------------------------
 \section{Sort}
+\begin{frame}[fragile]
+	\frametitle{Bubble Sort}
+
+
+	\begin{columns}[c]
+		\begin{column}{0.98\textwidth}
+
+			在上一次的课程中, 我们了解到了线性数据结构
+
+			以及它们的操作方式
+
+			这节课, 我们将来实际了解一下, 排序
+
+			排序是对这些线性数据结构中无序的数据进行排列, 是其变得有序的操作
+			排序的用处很多, 比如, 我们需要按照平均成绩来获取哪些学生学习努力,
+			可以获得奖学金
+
+		\end{column}
+	\end{columns}
+
+\end{frame}
 
 \subsection{Bubble Sort}
 \begin{frame}[fragile]
@@ -116,22 +139,27 @@
 
 	\begin{columns}[c]
 		\begin{column}{0.98\textwidth}
+			冒泡排序是最简单的排序方式之一
 
+			但是为此它的效率也并不高
 
 		\end{column}
 	\end{columns}
 
 \end{frame}
 
-\subsection{Shell Sort}
 \begin{frame}[fragile]
-	\frametitle{Shell Sort}
-
-	%% Contents:
 
 
 	\begin{columns}[c]
 		\begin{column}{0.98\textwidth}
+
+			\begin{itemize}
+				\item 比较相邻的元素。如果第一个比第二个大，就交换他们两个。
+				\item 对每一对相邻元素作同样的工作，从开始第一对到结尾的最后一对。这步做完后，最后的元素会是最大的数。
+				\item 针对所有的元素重复以上的步骤，除了最后一个。
+				\item 持续每次重复上面的步骤，直到没有任何一对数字需要比较。
+			\end{itemize}
 
 
 		\end{column}
@@ -149,23 +177,34 @@
 	\begin{columns}[c]
 		\begin{column}{0.98\textwidth}
 
+			因为冒泡排序的效率实在太过于惨不忍睹, 所以就有人研究出一个方法
+			可以极大的提高对于数据的排序效率
+
+			这种排序算法就被称作, 快速排序
+
+			顾名思义, 这个算法的排序速度很快
+
 		\end{column}
 	\end{columns}
 
 \end{frame}
 
-\subsection{Merge Sort}
 \begin{frame}[fragile]
-	\frametitle{Merge Sort}
-
 	%% Contents:
 
 
 	\begin{columns}[c]
 		\begin{column}{0.98\textwidth}
 
+			\begin{itemize}
+				\item 从数列中挑出一个元素，称为 "基准"（pivot）;
+				\item 重新排序数列，所有元素比基准值小的摆放在基准前面，所有元素比基准值大的摆在基准的后面（相同的数可以到任一边）。在这个分区退出之后，该基准就处于数列的中间位置。这个称为分区（partition）操作；
+				\item 然后再对两个分区进行如上操作
+			\end{itemize}
+
 		\end{column}
 	\end{columns}
+
 \end{frame}
 
 \subsection{Bucket Sort}
@@ -174,15 +213,58 @@
 
 	%% Contents:
 
-
-
 	\begin{columns}[c]
 		\begin{column}{0.98\textwidth}
+
+			假设一个学校中有2000个同学, 需要将他们的身高排序
+			请实现一个算法:
+
+			保证, 只有整数, 以厘米为单位, 范围在150到200
 
 		\end{column}
 	\end{columns}
 \end{frame}
 
+\begin{frame}[fragile]
+
+	%% Contents:
+
+	\begin{columns}[c]
+		\begin{column}{0.98\textwidth}
+
+			我们可知, 与上方两个排序所处理的情况不同
+
+			在该例中, 我们面对的是数据规模极大, 数据重复度极高的数据
+
+			如果采用上述两个算法, 几乎都可以被认为是极差的数据输入
+			会使得总体算法复杂度趋于最差情况
+
+			所以, 我们可以转变思路:
+			既然数据的重复度很高, 那么为什么不先统计这些数据都出现了几次,
+			再统一输出呢?
+
+			这就是桶排序
+
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]
+
+	%% Contents:
+
+	\begin{columns}[c]
+		\begin{column}{0.98\textwidth}
+
+			\begin{itemize}
+				\item 扫描整个输入, 分别对出现的数据计数
+				\item 然后按照单个数据的大小排序
+				\item 依照计数器数组记录的数据个数, 生成结果数组
+			\end{itemize}
+
+		\end{column}
+	\end{columns}
+\end{frame}
 % -----------------------------------------------
 
 \section{Read A Number}
@@ -194,6 +276,15 @@
 
 	\begin{columns}[c]
 		\begin{column}{0.98\textwidth}
+
+			检查第一位是否为正号或者负号, 如果为正号, 保持符号位不变
+			如果为负号, 将符号记为负
+
+			开始依次读取后方的数字, 更新缓存的数值
+
+			如果读到非数字或输入已经抵达结尾, 意味着数字已经结束
+
+			返回
 
 		\end{column}
 	\end{columns}
@@ -208,6 +299,14 @@
 
 	\begin{columns}[c]
 		\begin{column}{0.98\textwidth}
+
+			与上面类似,
+			我们需要检查第一位是否为正号或负号
+
+			读取, 若为数字, 更新缓存的数值
+			若为小数点, 记录小数点位置信息
+
+			读到非数字或者输出抵达结尾, 返回
 
 		\end{column}
 	\end{columns}
@@ -225,7 +324,46 @@
 	\begin{columns}[c]
 		\begin{column}{0.98\textwidth}
 
+			康威生命游戏:
 
+			有如下规则:
+
+			游戏进行在一个棋盘中, 每一个棋盘格对应一个细胞, 细胞只有两种状态
+			生, 或者, 死, 对于每一代, 我们根据一定规则, 迭代整个棋盘
+
+			对于整个棋盘:
+
+			\begin{itemize}
+				\item 长宽相等
+				\item 记录了当前每个细胞的状态
+				\item 有一个初始状态
+			\end{itemize}
+
+			对于每一个细胞:
+			\begin{itemize}
+				\item (1)当前细胞为死亡状态时，当周围有3个存活细胞时，则迭代后该细胞变成存活状态(模拟繁殖)；若原先为生，则保持不变。
+				\item (2)当前细胞为存活状态时，当周围的邻居细胞低于两个(不包含两个)存活时，该细胞变成死亡状态(模拟生命数量稀少)。
+				\item (3)当前细胞为存活状态时，当周围有两个或3个存活细胞时，该细胞保持原样。
+				\item (4)当前细胞为存活状态时，当周围有3个以上的存活细胞时，该细胞变成死亡状态(模拟生命数量过多)。
+			\end{itemize}
+
+
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]
+
+	%% Contents:
+
+	\begin{columns}[c]
+		\begin{column}{0.98\textwidth}
+
+			定义一个棋盘, 用数组存储:
+
+			将元素视为细胞, 有两个状态
+
+			更新规则如何?
 
 		\end{column}
 	\end{columns}
